@@ -35,10 +35,13 @@ const UserSchema = new mongoose.Schema(
             type: String,
             required: true,
         },
-        age: {
-            type: Number,
-        },
-        articles: [
+        todo: [
+            {
+                type: mongoose.Schema.Types.ObjectId,
+                ref: Todo,
+            },
+        ],
+        favourite_articles: [
             {
                 type: mongoose.Schema.Types.ObjectId,
                 ref: Article,
