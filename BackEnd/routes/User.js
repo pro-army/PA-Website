@@ -110,7 +110,7 @@ userRouter.get(
     }
 );
 
-publishRouter.post(
+userRouter.post(
     "/createTodo",
     passport.authenticate("jwt", { session: false }),
     (req, res) => {

@@ -5,6 +5,7 @@ const bcrypt = require("bcrypt");
 
 // import user-defidned modules
 const Article = require("./Article");
+const Todo = require("./Todo");
 
 // Create Schema for Article
 const UserSchema = new mongoose.Schema(
