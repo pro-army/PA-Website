@@ -38,8 +38,8 @@ connection.once("open", function () {
 // *******************************************
 // These are the routes of our api endpoint
 
-// const homeRouter = require("./routes/Home");
-// app.use("/api", homeRouter);
+const homeRouter = require("./routes/Home");
+app.use("/api", homeRouter);
 
 const userRouter = require("./routes/User");
 app.use("/api/user", userRouter);
