@@ -9,12 +9,6 @@ const Article = require("./Article");
 // Create Schema for Article
 const UserSchema = new mongoose.Schema(
     {
-        username: {
-            type: String,
-            required: true,
-            index: true,
-            unique: true,
-        },
         email: {
             type: String,
             required: true,
@@ -35,7 +29,7 @@ const UserSchema = new mongoose.Schema(
             type: String,
             required: true,
         },
-        todo: [
+        todos: [
             {
                 type: mongoose.Schema.Types.ObjectId,
                 ref: Todo,
