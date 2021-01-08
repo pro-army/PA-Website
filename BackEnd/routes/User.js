@@ -104,7 +104,7 @@ userRouter.get(
     (req, res) => {
         res.status(200).json({
             isAuthenticated: true,
-            user: req.user,
+            message: { msgError: false, msgBody: "User is Authenticated" },
         });
         // here req.user is added by passport after successful authentication
     }
@@ -118,16 +118,18 @@ userRouter.post(
             title: req.body.title,
             body: req.body.body,
             status: false,
+            owner: req.user._id,
         };
+        console.log(newTodo);
         const todo = new Todo(newTodo);
 
         // const todo = new Todo(newTodo);
         todo.save((err) => {
-            if (err)
+            if (err) {
                 res.status(500).json({
                     message: { msgError: true, msgBody: "Error has occured" },
                 });
-            else {
+            } else {
                 req.user.todos.push(todo); //push ObjectID of newly created todo to the user's todos array
                 req.user.save((err) => {
                     if (err)
