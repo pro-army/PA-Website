@@ -115,10 +115,13 @@ publishRouter.post(
     passport.authenticate("jwt", { session: false }),
     (req, res) => {
         const newTodo = {
-            ...req.body,
-            owner: req.user._id,
+            title: req.body.title,
+            body: req.body.body,
+            status: false,
         };
         const todo = new Todo(newTodo);
+
+        // const todo = new Todo(newTodo);
         todo.save((err) => {
             if (err)
                 res.status(500).json({
