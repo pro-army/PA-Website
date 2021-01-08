@@ -35,30 +35,16 @@ connection.once("open", function () {
     console.log("MongoDB database connection established successfully");
 });
 
-// Fake data for testing for now
-const newUser = {
-    username: "bhusalashish1",
-    email: "ashish@gmail1.com",
-    name: {
-        first_name: "Ashish",
-        last_name: "Bhusal",
-    },
-    password: "abc123",
-    age: 21,
-};
+// *******************************************
+// These are the routes of our api endpoint
 
-// Creating the document for the new user
-const user = new User(newUser);
+const homeRouter = require("./routes/Home");
+app.use("/api", homeRouter);
 
-// Save the document to the collection
+const userRouter = require("./routes/User");
+app.use("/api/user", userRouter);
 
-user.save((err, document) => {
-    if (err) {
-        console.log(err);
-    } else {
-        console.log("saved succefully", document);
-    }
-});
+// ******************************
 
 // Start the server in the specified port number which is there in the environment variable
 app.listen(PORT, function () {

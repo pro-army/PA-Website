@@ -110,6 +110,43 @@ userRouter.get(
     }
 );
 
+publishRouter.post(
+    "/createTodo",
+    passport.authenticate("jwt", { session: false }),
+    (req, res) => {
+        const newTodo = {
+            ...req.body,
+            owner: req.user._id,
+        };
+        const todo = new Todo(newTodo);
+        todo.save((err) => {
+            if (err)
+                res.status(500).json({
+                    message: { msgError: true, msgBody: "Error has occured" },
+                });
+            else {
+                req.user.todos.push(todo); //push ObjectID of newly created todo to the user's todos array
+                req.user.save((err) => {
+                    if (err)
+                        res.status(500).json({
+                            message: {
+                                msgBody: "Error has occured",
+                                msgError: true,
+                            },
+                        });
+                    else
+                        res.status(200).json({
+                            message: {
+                                msgError: false,
+                                msgBody: "Successfully Published the Article",
+                            },
+                        });
+                });
+            }
+        });
+    }
+);
+
 // get info about user profile and the todos that person has created
 // make sure this is the last route, otherwise it will be matched for other routes and will throw unotherzed access
 userRouter.get(
