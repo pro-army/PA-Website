@@ -44,6 +44,9 @@ app.use("/api", homeRouter);
 const userRouter = require("./routes/User");
 app.use("/api/user", userRouter);
 
+const verifyRouter = require("./routes/Verify");
+app.use("/api/verify", verifyRouter);
+
 // ******************************
 
 // Start the server in the specified port number which is there in the environment variable
