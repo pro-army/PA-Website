@@ -23,6 +23,14 @@ exports.sendcode = async (req, res) => {
             });
         }
 
+        const redundantCodes = await SecretCode.find({ user_id: user._id });
+
+        redundantCodes.forEach(async (secretCode) => {
+            delid = secretCode._id;
+            console.log(delid);
+            await SecretCode.findByIdAndDelete(delid);
+        });
+
         const secretCode = new SecretCode({
             code: code,
             email_id: req.body.email,
