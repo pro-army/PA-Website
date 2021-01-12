@@ -30,6 +30,10 @@ const UserSchema = new mongoose.Schema(
             type: String,
             required: true,
         },
+        active: {
+            type: Boolean,
+            default: false,
+        },
         todos: [
             {
                 type: mongoose.Schema.Types.ObjectId,
