@@ -4,10 +4,16 @@ const userRouter = express.Router();
 const passport = require("passport");
 const passportConfig = require("../passport");
 const JWT = require("jsonwebtoken");
+const crypto = require("crypto");
 
 // import user-defidned modules or Schema
 const User = require("../models/User");
 const Todo = require("../models/Todo");
+// const SecretCode = require("../models/SecretCode");
+
+// const generatecode = () => {
+//     return crypto.randomBytes(128).toString("hex");
+// };
 
 const signToken = (userID) => {
     return JWT.sign(

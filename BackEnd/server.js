@@ -5,6 +5,8 @@ const cookieParser = require("cookie-parser");
 const cors = require("cors");
 const mongoose = require("mongoose");
 require("dotenv").config();
+const ejs = require("ejs");
+const path = require("path");
 
 // Importing the user-defined modules here
 const User = require("./models/User");
@@ -35,6 +37,10 @@ connection.once("open", function () {
     console.log("MongoDB database connection established successfully");
 });
 
+// Adding Ejs Render Mehthod for email tempalte
+app.set("view engine", "ejs");
+app.set("views", path.join(__dirname, "Backend/views"));
+
 // *******************************************
 // These are the routes of our api endpoint
 
@@ -43,6 +49,9 @@ app.use("/api", homeRouter);
 
 const userRouter = require("./routes/User");
 app.use("/api/user", userRouter);
+
+const verifyRouter = require("./routes/Verify");
+app.use("/api/verify", verifyRouter);
 
 // ******************************
 
