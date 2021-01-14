@@ -158,6 +158,28 @@ userRouter.post(
     }
 );
 
+userRouter.get(
+    "/auth/linkedin",
+    passport.authenticate("linkedin", { state: "SOME STATE" }),
+    function (req, res) {
+        // The request will be redirected to LinkedIn for authentication, so this
+        // function will not be called.
+    }
+);
+
+userRouter.get(
+    "/auth/linkedin/success",
+    passport.authenticate("linkedin", {
+        successRedirect: "/",
+        failureRedirect: "/login",
+    })
+);
+
+// userRouter.get("/auth/linkedin/success", function (req, res) {
+//     console.log(res);
+//     res.status(200).json({ msg: "success" });
+// });
+
 // get info about user profile and the todos that person has created
 // make sure this is the last route, otherwise it will be matched for other routes and will throw unotherzed access
 userRouter.get(
