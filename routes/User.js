@@ -5,6 +5,8 @@ const passport = require("passport");
 const passportConfig = require("../passport");
 const JWT = require("jsonwebtoken");
 const crypto = require("crypto");
+const {OAuth2Client}=require('google-auth-library')
+var bcrypt = require('bcryptjs');
 
 // import user-defidned modules or Schema
 const User = require("../models/User");
@@ -14,6 +16,10 @@ const Todo = require("../models/Todo");
 // const generatecode = () => {
 //     return crypto.randomBytes(128).toString("hex");
 // };
+
+
+const ClientId=process.env.Google_ClientId
+const client=new OAuth2Client(ClientId)
 
 const signToken = (userID) => {
     return JWT.sign(
@@ -216,5 +222,122 @@ userRouter.get(
         }
     }
 );
+
+
+//signin and signup using google
+userRouter.post("/logingoogle",(req,res)=>{
+    const {tokenId}=req.body
+    client.verifyIdToken({idToken:tokenId,audience:ClientId})
+    .then(response=>{
+        //console.log(response.payload)
+         const {email_verified,email}=response.payload
+         const first_name=response.payload.given_name||"";
+         const last_name=response.payload.family_name||"";
+        //  console.log(first_name)
+        //  console.log(last_name)
+        if(email_verified){
+            User.findOne({email},(err,saveduser)=>{
+                if (err) {
+                    console.log(1)
+                    res.status(500).json({
+                        message: { msgError: true, msgBody: "Something went wrong!" },
+                    }) 
+                }
+                else{
+
+                    if(saveduser)
+                    {
+                            //user already have an account
+                            const token=signToken(saveduser._id);
+
+                            res.status(200).json({
+                                token,
+                                isAuthenticated: true,
+                                message: { msgError: false, msgBody: "Login Successful" }
+                            })
+                        
+                       
+                    }
+                    else{
+                        //user is not registered
+                        res.status(500).json({
+                            
+                            message: { msgError: true, msgBody: "You don't have an account.You need to Signin first" },
+                        });
+                    }
+                }
+            })
+        }
+    })
+})
+
+
+
+
+userRouter.post("/signupgoogle",(req,res)=>{
+    const {tokenId}=req.body
+    client.verifyIdToken({idToken:tokenId,audience:ClientId})
+    .then(response=>{
+
+        //console.log(response.payload)
+         const {email_verified,email}=response.payload
+         const first_name=response.payload.given_name||"";
+         const last_name=response.payload.family_name||"";
+        
+        if(email_verified){
+            User.findOne({email},(err,saveduser)=>{
+                if (err) {
+                    res.status(500).json({
+                        message: { msgError: true, msgBody: "Something went wrong!" },
+                    }) 
+                }
+                else{
+
+                    if(saveduser)
+                    {
+                            //user already have an account
+                            res.status(500).json({
+                                message: { msgError: true, msgBody: "You have an account.Go to login page" },
+                            });
+                             
+                    }
+                    else{
+                        
+                        //user is not registered
+                        let password=email+process.env.Google_Secret
+                        bcrypt.hash(password,12)
+                        .then(hashpassword=>{
+                            const newUser = new User({
+                                email,
+                                name: {
+                                    first_name,
+                                    last_name,
+                                },
+                                password:hashpassword,
+                            });
+                            newUser.save((err) => {
+                                if (err)
+                                    res.status(500).json({
+                                        message: {
+                                            msgError: true,
+                                            msgBody: "Error has occured",
+                                        },
+                                    });
+                                else
+                                    res.status(201).json({
+                                        message: {
+                                            msgError: false,
+                                            msgBody: "Account successfully created",
+                                        },
+                                    });
+                            });
+                        })
+                        
+                    }
+                }
+            })
+        }
+    })
+})
 
 module.exports = userRouter;
