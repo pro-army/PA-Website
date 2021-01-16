@@ -7,7 +7,8 @@ const JWT = require("jsonwebtoken");
 const crypto = require("crypto");
 const {OAuth2Client}=require('google-auth-library')
 var bcrypt = require('bcryptjs');
-
+//validate
+const validateRegisterInput=require("../validation/register_validate");
 // import user-defidned modules or Schema
 const User = require("../models/User");
 const Todo = require("../models/Todo");
@@ -34,6 +35,11 @@ const signToken = (userID) => {
 
 userRouter.post("/register", (req, res) => {
     const { email, first_name, last_name, password } = req.body;
+    const { errors, isValid } = validateRegisterInput(req.body);
+   // Check validation
+     if (!isValid) {
+       return res.status(400).json(errors);
+  }
     User.findOne({ email }, (err, user) => {
         if (err) {
             res.status(500).json({
