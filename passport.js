@@ -44,7 +44,7 @@ passport.use(
     })
 );
 
-LinkedIn
+//LinkedIn
 passport.use(
     new LinkedInStrategy(
         {
