@@ -4,6 +4,7 @@ const JwtStrategy = require("passport-jwt").Strategy;
 const LinkedInStrategy = require("passport-linkedin-oauth2").Strategy;
 const User = require("./models/User");
 
+
 const cookieExtractor = (req) => {
     let token = null;
     if (req && req.cookies) {
@@ -43,7 +44,7 @@ passport.use(
     })
 );
 
-// LinkedIn
+//LinkedIn
 passport.use(
     new LinkedInStrategy(
         {
@@ -66,3 +67,6 @@ passport.use(
         }
     )
 );
+
+
+
