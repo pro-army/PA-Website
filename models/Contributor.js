@@ -8,7 +8,7 @@ const User = require("./User");
 // Create Schema for Article
 const ContributorSchema = new mongoose.Schema(
     {
-        user_id: {
+        user: {
             type: mongoose.Schema.Types.ObjectId,
             ref: User,
         },
