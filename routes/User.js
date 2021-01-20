@@ -181,6 +181,8 @@ userRouter.get(
     })
 );
 
+
+
 // userRouter.get("/auth/linkedin/success", function (req, res) {
 //     console.log(res);
 //     res.status(200).json({ msg: "success" });
