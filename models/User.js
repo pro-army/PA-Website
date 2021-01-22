@@ -13,23 +13,22 @@ const UserSchema = new mongoose.Schema(
         email: {
             type: String,
             // required: true,
-            index: true,
-            unique: true,
+              index: true,
+               unique: true,
         },
-        socialID: {
-            googleID: {
+         githubID: {
                 type: String,
-            },
-            facebookID: {
+         },
+         facebookID: {
                 type: String,
-            },
-            githubID: {
+         },
+          googleID: {
                 type: String,
-            },
+            }, 
             linkedinID: {
                 type: String,
             },
-        },
+
         name: {
             type: String,
             default: "Soldier",

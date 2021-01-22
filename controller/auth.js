@@ -4,8 +4,10 @@ const passport = require("passport");
 const passportConfig = require("../passport");
 const JWT = require("jsonwebtoken");
 const crypto = require("crypto");
-var bcrypt = require("bcryptjs");
+const bcrypt = require("bcryptjs");
 const fetch = require("node-fetch");
+const { OAuth2Client } = require("google-auth-library");
+
 //validate
 const validateRegisterInput = require("../validation/register_validate");
 // import user-defidned modules or Schema
@@ -158,9 +160,7 @@ exports.facebooklogin = async (req, res) => {
                             const newUser = new User({
                                 email,
                                 name,
-                                socialID: {
-                                    facebookID: data.userID,
-                                },
+                                facebookID: data.userID,
                                 active: true,
                                 picture: data.picture.data.url,
                                 password: hashpassword,
@@ -187,4 +187,203 @@ exports.facebooklogin = async (req, res) => {
                 }
             });
         });
+};
+
+
+
+
+//google login
+const ClientId = process.env.Google_ClientId;
+const client = new OAuth2Client(ClientId);
+
+exports.googlelogin=async (req,res)=>{
+    const { tokenId,googleId } = req.body;
+    client
+        .verifyIdToken({ idToken: tokenId, audience: ClientId })
+        .then((response) => {
+            
+            const { email_verified, email,name,picture} = response.payload;
+            if (email_verified) {
+                User.findOne({ email }, (err, saveduser) => {
+                    if (err) {
+                        
+                        res.status(500).json({
+                            message: {
+                                msgError: true,
+                                msgBody: "Something went wrong!",
+                            },
+                        });
+                    } else {
+                        if (saveduser) {
+                            //user already have an account
+                            const token = signToken(saveduser._id);
+                            res.status(200).json({
+                                token,
+                                isAuthenticated: true,
+                                message: {
+                                    msgError: false,
+                                    msgBody: "Login Successful",
+                                },
+                            });
+                        } 
+                        else {
+
+                            //user is not registered
+                            let password = email + process.env.Google_Secret;
+                            bcrypt.hash(password, 12).then((hashpassword) => {
+                                const newUser = new User({
+                                    email,
+                                    name,
+                                   googleID: googleId,
+                                   active: true,
+                                    picture,
+                                    password: hashpassword,
+                                });
+                               
+                                newUser.save((err) => {
+                                    if (err)
+                                        res.status(500).json({
+                                            message: {
+                                                msgError: true,
+                                                msgBody: "Error has occured",
+                                            },
+                                        });
+                                    else
+                                        res.status(201).json({
+                                            message: {
+                                                msgError: false,
+                                                msgBody:
+                                                    "Account successfully created",
+                                            },
+                                        });
+                                });
+                            });
+                        }
+                    }
+                });
+            } else {
+                res.status(401).json({
+                    message: {
+                        msgError: true,
+                        msgBody: "Google Account Not Verified!",
+                    },
+                });
+            }
+        });
+}
+
+//sign in github
+//sigin with github
+const client_id = process.env.GITHUB_CLIENT_ID;
+const client_secret = process.env.GITHUB_CLIENT_SECRET;
+
+async function getAccessToken({ code, client_id, client_secret }) {
+    const request = await fetch("https://github.com/login/oauth/access_token", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({
+        client_id,
+        client_secret,
+        code
+      })
+    });
+    const text = await request.text();
+    const params = new URLSearchParams(text);
+    return params.get("access_token");
+  }
+
+  async function fetchGitHubUser(token) {
+    const request = await fetch("https://api.github.com/user", {
+      headers: {
+        Authorization: "token " + token
+      }
+    });
+    return await request.json();
+  }
+
+exports.githublogin =  async (req,res)=>{
+    const {code}=req.body;
+    // console.log(code)
+    const access_token= await getAccessToken({code,client_id,client_secret})
+    // console.log(access_token);
+    const user = await fetchGitHubUser(access_token);
+    const ID =user.id;
+    const login=user.login;
+    // console.log(ID)
+    // console.log(login)
+
+           User.findOne({ githubID: ID,
+                                     }, (err, saveduser) => {
+                    if (err) {
+                        console.log("rashi  errorr");
+                        res.status(500).json({
+                            message: {
+                                msgError: true,
+                                msgBody: "Something went wrong!",
+                            },
+                        });
+                    } else {
+                        if (saveduser) {
+                             console.log("rashi  saved",saveduser);
+                            //user already have an account
+                            const token = signToken(saveduser._id);
+                            res.status(200).json({
+                                token,
+                                isAuthenticated: true,
+                                message: {
+                                    msgError: false,
+                                    msgBody: "Login Successful",
+                                },
+                            });
+                        } 
+                        else {
+                                 console.log("rashi  not saved");
+                            //user is not registered
+                            let password = login ;
+                            bcrypt.hash(password, 12).then((hashpassword) => {
+                                const newUser = new User({
+                                    name : login,
+                                    
+                               githubID: ID,
+                                
+                                    active: true,
+    
+                                    password: hashpassword,
+                                });
+                               console.log("rashi",newUser);
+                                newUser.save((err) => {
+                                    if (err){
+                                        console.log("errrrrrrrrrrrrrr",err);
+                                            res.status(500).json({
+                                            message: {
+                                                msgError: true,
+                                                msgBody: "Error has occured",
+                                            },
+                                        });
+                                    }
+            
+                                       
+                                    else{
+                                        console.log("sucesssssssssssssssssss");
+                                           res.status(201).json({
+                                            message: {
+                                                msgError: false,
+                                                msgBody:
+                                                    "Account successfully created",
+                                            },
+                                        });
+                                    }
+                                        
+                                });
+                            });
+                        }
+                    }
+                });
+
+ 
+    
+    
+
 };
