@@ -5,10 +5,11 @@ import axios from 'axios'
 function LoginGoogle() {
 
     const responseSuccessGoogle=(response)=>{
+      //console.log(response.googleId)
         axios({
           method:"POST",
-          url:"http://localhost:4000/api/user/logingoogle",
-          data:{tokenId:response.tokenId}
+          url:"http://localhost:4000/api/user/login/google",
+          data:{tokenId:response.tokenId,googleId:response.googleId}
         }).then(response=>{
     
           console.log(response.data.message.msgBody)
@@ -17,18 +18,6 @@ function LoginGoogle() {
         .catch(err=>console.log(err))
       }
     
-      const responseSuccessSignupGoogle=(response)=>{
-        axios({
-          method:"POST",
-          url:"http://localhost:4000/api/user/signupgoogle",
-          data:{tokenId:response.tokenId}
-        }).then(response=>{
-          console.log(response.data.message.msgBody)
-    
-        })
-        .catch(err=>console.log(err))
-      }
-      
       const responseFailureGoogle=(response)=>{
         console.log(response)
       }
@@ -36,19 +25,13 @@ function LoginGoogle() {
     return (
         <div>
             <GoogleLogin
-            clientId="client_id_from_google"
+            clientId="603299777654-ejrbu45mkh8a4n5q0tvlko2c0mj395vi.apps.googleusercontent.com"
             buttonText="Login with google"
             onSuccess={responseSuccessGoogle}
             onFailure={responseFailureGoogle}
             cookiePolicy={'single_host_origin'}
             />
-            <GoogleLogin
-                clientId="client_id_from_google"
-                buttonText="Signup with google"
-                onSuccess={responseSuccessSignupGoogle}
-                onFailure={responseFailureGoogle}
-                cookiePolicy={'single_host_origin'}
-            />
+           
         </div>
     );
 }
