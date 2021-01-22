@@ -7,14 +7,14 @@ function LoginwithFacebook() {
         console.log(response);
         axios({
             method: "POST",
-            url: "http://localhost:4000/api/user/loginfacebook",
+            url: "http://localhost:4000/api/user/login/facebook",
             data: {
                 accessToken: response.accessToken,
                 userID: response.userID,
             },
         })
             .then((response) => {
-                console.log(response.data.message.msgBody);
+                console.log(response);
             })
             .catch((err) => console.log(err));
     };
@@ -22,8 +22,9 @@ function LoginwithFacebook() {
     return (
         <div>
             <FacebookLogin
-                appId="app_id_from_fb"
+                appId="1793279934167709"
                 autoLoad={false}
+                // onClick={componentClicked}
                 callback={responseFacebook}
             />
         </div>
