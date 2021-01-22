@@ -40,7 +40,7 @@ userRouter.post("/register", auth.register);
 userRouter.post("/login", auth.login);
 userRouter.post("/login/facebook", auth.facebooklogin);
 userRouter.post("/login/google", auth.googlelogin);
-userRouter.post("/logingithub", auth.githublogin);
+userRouter.post("/login/github", auth.githublogin);
 
 userRouter.get(
     "/isAuthenticated",

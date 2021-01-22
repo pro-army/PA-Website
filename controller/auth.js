@@ -234,7 +234,7 @@ exports.googlelogin=async (req,res)=>{
                                 const newUser = new User({
                                     email,
                                     name,
-                                   googleID: googleId,
+                                    googleID: googleId,
                                    active: true,
                                     picture,
                                     password: hashpassword,
@@ -272,8 +272,8 @@ exports.googlelogin=async (req,res)=>{
         });
 }
 
-//sign in github
-//sigin with github
+
+//signin with github
 const client_id = process.env.GITHUB_CLIENT_ID;
 const client_secret = process.env.GITHUB_CLIENT_SECRET;
 
@@ -305,19 +305,13 @@ async function getAccessToken({ code, client_id, client_secret }) {
 
 exports.githublogin =  async (req,res)=>{
     const {code}=req.body;
-    // console.log(code)
     const access_token= await getAccessToken({code,client_id,client_secret})
-    // console.log(access_token);
     const user = await fetchGitHubUser(access_token);
     const ID =user.id;
     const login=user.login;
-    // console.log(ID)
-    // console.log(login)
 
-           User.findOne({ githubID: ID,
-                                     }, (err, saveduser) => {
+              User.findOne({ githubID: ID}, (err, saveduser) => {
                     if (err) {
-                        console.log("rashi  errorr");
                         res.status(500).json({
                             message: {
                                 msgError: true,
@@ -326,7 +320,6 @@ exports.githublogin =  async (req,res)=>{
                         });
                     } else {
                         if (saveduser) {
-                             console.log("rashi  saved",saveduser);
                             //user already have an account
                             const token = signToken(saveduser._id);
                             res.status(200).json({
@@ -339,23 +332,17 @@ exports.githublogin =  async (req,res)=>{
                             });
                         } 
                         else {
-                                 console.log("rashi  not saved");
                             //user is not registered
                             let password = login ;
                             bcrypt.hash(password, 12).then((hashpassword) => {
                                 const newUser = new User({
                                     name : login,
-                                    
-                               githubID: ID,
-                                
+                                    githubID: ID,
                                     active: true,
-    
-                                    password: hashpassword,
+                                 password: hashpassword,
                                 });
-                               console.log("rashi",newUser);
                                 newUser.save((err) => {
                                     if (err){
-                                        console.log("errrrrrrrrrrrrrr",err);
                                             res.status(500).json({
                                             message: {
                                                 msgError: true,
@@ -364,9 +351,7 @@ exports.githublogin =  async (req,res)=>{
                                         });
                                     }
             
-                                       
-                                    else{
-                                        console.log("sucesssssssssssssssssss");
+                                        else{
                                            res.status(201).json({
                                             message: {
                                                 msgError: false,
@@ -381,9 +366,5 @@ exports.githublogin =  async (req,res)=>{
                         }
                     }
                 });
-
- 
-    
-    
-
+            
 };
