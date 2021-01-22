@@ -8,6 +8,9 @@ require("dotenv").config();
 const ejs = require("ejs");
 const path = require("path");
 
+
+
+
 // Importing the user-defined modules here
 const User = require("./models/User");
 

@@ -13,7 +13,7 @@ function LoginwithGithub() {
             console.log(response.data.message.msgBody)
       
           })
-          .catch(err=>console.log(err))
+          .catch(err=>console.log("error11111111",err))
     }
     const onFailure = (response) => console.error(response);
     return (
