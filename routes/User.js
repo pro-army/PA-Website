@@ -7,6 +7,8 @@ const JWT = require("jsonwebtoken");
 const crypto = require("crypto");
 const {OAuth2Client}=require('google-auth-library')
 var bcrypt = require('bcryptjs');
+const fetch = require("node-fetch");
+const cookieSession = require("cookie-session");
 //validate
 const validateRegisterInput=require("../validation/register_validate");
 // import user-defidned modules or Schema
@@ -21,6 +23,15 @@ const Todo = require("../models/Todo");
 
 const ClientId=process.env.Google_ClientId
 const client=new OAuth2Client(ClientId)
+
+const client_id = process.env.GITHUB_CLIENT_ID;
+const client_secret = process.env.GITHUB_CLIENT_SECRET;
+//console.log({ client_id, client_secret });
+userRouter.use(
+  cookieSession({
+    secret: process.env.COOKIE_SECRET
+  })
+);
 
 const signToken = (userID) => {
     return JWT.sign(
@@ -344,6 +355,45 @@ userRouter.post("/signupgoogle",(req,res)=>{
             })
         }
     })
+})
+
+// sign in with github
+async function getAccessToken({ code, client_id, client_secret }) {
+    const request = await fetch("https://github.com/login/oauth/access_token", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({
+        client_id,
+        client_secret,
+        code
+      })
+    });
+    const text = await request.text();
+    const params = new URLSearchParams(text);
+    return params.get("access_token");
+  }
+  async function fetchGitHubUser(token) {
+  const request = await fetch("https://api.github.com/user", {
+    headers: {
+      Authorization: "token " + token
+    }
+  });
+  return await request.json();
+}
+
+userRouter.post('/logingithub',async (req,res)=>{
+  const {code}=req.body;
+    console.log(code)
+    const token= await getAccessToken({code,client_id,client_secret})
+    console.log(token);
+    const user = await fetchGitHubUser(token);
+     console.log(user);
+   // const access_token = await getAccessToken({ code, client_id, client_secret });
+   // console.log(access_token)
+    //res.json({access_token})
+
 })
 
 

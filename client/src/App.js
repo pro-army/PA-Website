@@ -3,6 +3,7 @@ import "./App.css";
 import LinkedinLogin from "./components/LoginwithLinkedin";
 import LoginGoogle from './components/Loginwithgoogle';
 import LoginFacebook from './components/Loginwithfacebook'
+import Loginwithgithub  from './components/Loginwithgithub'
 
 
 function App() {
@@ -11,6 +12,7 @@ function App() {
             <LinkedinLogin />
             <LoginGoogle />
             <LoginFacebook/>
+            <Loginwithgithub/>
         </div>
     );
 }
