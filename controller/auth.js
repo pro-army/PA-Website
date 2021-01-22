@@ -49,6 +49,7 @@ exports.register = async (req, res) => {
             const newUser = new User({
                 email,
                 name: first_name + " " + last_name,
+                picture: `https://ui-avatars.com/api/?name=${first_name}&background=random`,
                 password,
             });
             newUser.save((err) => {
@@ -135,10 +136,8 @@ exports.facebooklogin = async (req, res) => {
             User.findOne({ email }, { password: 0 }, (err, saveduser) => {
                 if (err) {
                     res.status(500).json({
-                        message: {
-                            msgError: true,
-                            msgBody: "Something went wrong!",
-                        },
+                        error: true,
+                        errorBody: "Internal Server Error",
                     });
                 } else {
                     if (saveduser) {
@@ -148,10 +147,8 @@ exports.facebooklogin = async (req, res) => {
                             token,
                             user: saveduser,
                             isAuthenticated: true,
-                            message: {
-                                msgError: false,
-                                msgBody: "Login Successful",
-                            },
+                            error: false,
+                            message: "Login Successful",
                         });
                     } else {
                         //user is not registered
@@ -165,99 +162,162 @@ exports.facebooklogin = async (req, res) => {
                                 picture: data.picture.data.url,
                                 password: hashpassword,
                             });
-                            newUser.save((err) => {
+                            newUser.save((err, user) => {
                                 if (err)
                                     res.status(500).json({
-                                        message: {
-                                            msgError: true,
-                                            msgBody: "Error has occured",
-                                        },
+                                        error: true,
+                                        errorBody: "Internal Server Error",
                                     });
-                                else
+                                else {
+                                    const token = signToken(user._id);
+                                    user.password = undefined; //to remove password field from the user
                                     res.status(201).json({
-                                        message: {
-                                            msgError: false,
-                                            msgBody:
-                                                "Account successfully created",
-                                        },
+                                        token,
+                                        isAuthenticated: true,
+                                        user: user,
+                                        error: false,
+                                        message: "Account Created Succefully",
                                     });
+                                }
                             });
                         });
                     }
                 }
             });
+        })
+        .catch((err) => {
+            res.status(400).json({
+                error: true,
+                errorBody: err,
+            });
         });
 };
 
-// Linkedin
+// Linkedin Login
+
+// get access token
+const getAccessTokenLinkedin = async (code) => {
+    var myHeaders = new fetch.Headers();
+    myHeaders.append("Content-Type", "application/x-www-form-urlencoded");
+
+    var urlencoded = new URLSearchParams();
+    urlencoded.append("grant_type", "authorization_code");
+    urlencoded.append("code", code);
+    urlencoded.append("redirect_uri", "http://localhost:3000/linkedin");
+    urlencoded.append("client_id", process.env.LINKEDIN_KEY);
+    urlencoded.append("client_secret", process.env.LINKEDIN_SECRET);
+
+    var requestOptions = {
+        method: "POST",
+        headers: myHeaders,
+        body: urlencoded,
+    };
+
+    const response = await fetch(
+        "https://www.linkedin.com/oauth/v2/accessToken",
+        requestOptions
+    );
+    const data = await response.json();
+    return data.access_token;
+};
+
+const getEmailfromLinkedin = async (access_token) => {
+    var myHeaders = new fetch.Headers();
+    myHeaders.append("Authorization", `Bearer ${access_token}`);
+
+    var requestOptions = {
+        method: "GET",
+        headers: myHeaders,
+    };
+
+    const response = await fetch(
+        "https://api.linkedin.com/v2/emailAddress?q=members&projection=(elements*(handle~))",
+        requestOptions
+    );
+    const data = await response.json();
+    return data.elements[0]["handle~"].emailAddress;
+};
+
+const getDatafromLinkedin = async (access_token) => {
+    var myHeaders = new fetch.Headers();
+    myHeaders.append("Authorization", `Bearer ${access_token}`);
+
+    var requestOptions = {
+        method: "GET",
+        headers: myHeaders,
+    };
+
+    const response = await fetch(
+        "https://api.linkedin.com/v2/me?projection=(id,firstName,lastName,profilePicture(displayImage~:playableStreams))",
+        requestOptions
+    );
+    const data = await response.json();
+    return data;
+};
+
 exports.linkedinlogin = async (req, res) => {
     const { code } = req.body.data;
-    console.log(code);
-    res.status(200).json({ error: false });
-    // fetch(urlGraphFacebook, {
-    //     method: "GET",
-    // })
-    //     .then((res) => res.json())
-    //     .then((data) => {
-    //         // console.log("From facebook", data);
-    //         const { email, name } = data;
-    //         User.findOne({ email }, { password: 0 }, (err, saveduser) => {
-    //             if (err) {
-    //                 res.status(500).json({
-    //                     message: {
-    //                         msgError: true,
-    //                         msgBody: "Something went wrong!",
-    //                     },
-    //                 });
-    //             } else {
-    //                 if (saveduser) {
-    //                     //user already have an account
-    //                     const token = signToken(saveduser._id);
-    //                     res.status(200).json({
-    //                         token,
-    //                         user: saveduser,
-    //                         isAuthenticated: true,
-    //                         message: {
-    //                             msgError: false,
-    //                             msgBody: "Login Successful",
-    //                         },
-    //                     });
-    //                 } else {
-    //                     //user is not registered
-    //                     let password = email + process.env.Google_Secret;
-    //                     bcrypt.hash(password, 12).then((hashpassword) => {
-    //                         const newUser = new User({
-    //                             email,
-    //                             name,
-    //                             socialID: {
-    //                                 facebookID: data.userID,
-    //                             },
-    //                             active: true,
-    //                             picture: data.picture.data.url,
-    //                             password: hashpassword,
-    //                         });
-    //                         newUser.save((err) => {
-    //                             if (err)
-    //                                 res.status(500).json({
-    //                                     message: {
-    //                                         msgError: true,
-    //                                         msgBody: "Error has occured",
-    //                                     },
-    //                                 });
-    //                             else
-    //                                 res.status(201).json({
-    //                                     message: {
-    //                                         msgError: false,
-    //                                         msgBody:
-    //                                             "Account successfully created",
-    //                                     },
-    //                                 });
-    //                         });
-    //                     });
-    //                 }
-    //             }
-    //         });
-    //     });
+    const access_token = await getAccessTokenLinkedin(code);
+    const email = await getEmailfromLinkedin(access_token);
+    const data = await getDatafromLinkedin(access_token);
+    User.findOne({ email }, { password: 0 }, (err, saveduser) => {
+        if (err) {
+            res.status(500).json({
+                error: true,
+                errorBody: "Internal Server Error",
+            });
+        } else {
+            if (saveduser) {
+                //user already have an account
+                const token = signToken(saveduser._id);
+                res.status(200).json({
+                    token,
+                    isAuthenticated: true,
+                    user: saveduser,
+                    error: false,
+                    message: "Login Successful",
+                });
+            } else {
+                //user is not registered
+                const first_name = data.firstName.localized.en_US;
+                const last_name = data.lastName.localized.en_US;
+                const picture =
+                    data.profilePicture["displayImage~"].elements[0]
+                        .identifiers[0].identifier;
+                const linkedinID = data.id;
+                let password = linkedinID + process.env.Google_Secret;
+                bcrypt.hash(password, 12).then((hashpassword) => {
+                    const newUser = new User({
+                        email,
+                        name: first_name + " " + last_name,
+                        linkedinID,
+                        active: true,
+                        picture,
+                        password: hashpassword,
+                    });
+
+                    newUser.save((err, user) => {
+                        if (err)
+                            res.status(500).json({
+                                error: true,
+                                errorBody: "Internal Server Error",
+                            });
+                        else {
+                            const token = signToken(user._id);
+                            user.password = undefined; //to remove password field from the user
+                            res.status(201).json({
+                                token,
+                                isAuthenticated: true,
+                                user: user,
+                                error: false,
+                                message: "Account Created Succefully",
+                            });
+                        }
+                    });
+                });
+            }
+        }
+    });
 };
 
 //google login
@@ -271,13 +331,11 @@ exports.googlelogin = async (req, res) => {
         .then((response) => {
             const { email_verified, email, name, picture } = response.payload;
             if (email_verified) {
-                User.findOne({ email }, (err, saveduser) => {
+                User.findOne({ email }, { password: 0 }, (err, saveduser) => {
                     if (err) {
                         res.status(500).json({
-                            message: {
-                                msgError: true,
-                                msgBody: "Something went wrong!",
-                            },
+                            error: true,
+                            errorBody: "Internal Server Error",
                         });
                     } else {
                         if (saveduser) {
@@ -286,14 +344,12 @@ exports.googlelogin = async (req, res) => {
                             res.status(200).json({
                                 token,
                                 isAuthenticated: true,
-                                message: {
-                                    msgError: false,
-                                    msgBody: "Login Successful",
-                                },
+                                error: false,
+                                message: "Login Successful",
                             });
                         } else {
                             //user is not registered
-                            let password = email + process.env.Google_Secret;
+                            let password = googleId + process.env.Google_Secret;
                             bcrypt.hash(password, 12).then((hashpassword) => {
                                 const newUser = new User({
                                     email,
@@ -304,22 +360,24 @@ exports.googlelogin = async (req, res) => {
                                     password: hashpassword,
                                 });
 
-                                newUser.save((err) => {
+                                newUser.save((err, user) => {
                                     if (err)
                                         res.status(500).json({
-                                            message: {
-                                                msgError: true,
-                                                msgBody: "Error has occured",
-                                            },
+                                            error: true,
+                                            errorBody: "Internal Server Error",
                                         });
-                                    else
+                                    else {
+                                        const token = signToken(user._id);
+                                        user.password = undefined; //to remove password field from the user
                                         res.status(201).json({
-                                            message: {
-                                                msgError: false,
-                                                msgBody:
-                                                    "Account successfully created",
-                                            },
+                                            token,
+                                            isAuthenticated: true,
+                                            user: user,
+                                            error: false,
+                                            message:
+                                                "Account Created Succefully",
                                         });
+                                    }
                                 });
                             });
                         }
@@ -327,63 +385,82 @@ exports.googlelogin = async (req, res) => {
                 });
             } else {
                 res.status(401).json({
-                    message: {
-                        msgError: true,
-                        msgBody: "Google Account Not Verified!",
-                    },
+                    error: true,
+                    errorBody: "Google Account Not Verified!",
                 });
             }
         });
 };
 
 //signin with github
-const client_id = process.env.GITHUB_CLIENT_ID;
-const client_secret = process.env.GITHUB_CLIENT_SECRET;
+const getAccessTokenGithub = async (code) => {
+    var myHeaders = new fetch.Headers();
+    myHeaders.append("Accept", "application/json");
 
-async function getAccessToken({ code, client_id, client_secret }) {
-    const request = await fetch("https://github.com/login/oauth/access_token", {
-        method: "POST",
-        headers: {
-            "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-            client_id,
-            client_secret,
-            code,
-        }),
-    });
-    const text = await request.text();
-    const params = new URLSearchParams(text);
-    return params.get("access_token");
-}
+    var requestOptions = {
+        method: "GET",
+        headers: myHeaders,
+        redirect: "follow",
+    };
 
-async function fetchGitHubUser(token) {
-    const request = await fetch("https://api.github.com/user", {
-        headers: {
-            Authorization: "token " + token,
-        },
-    });
-    return await request.json();
-}
+    const response = await fetch(
+        `https://github.com/login/oauth/access_token?client_id=${process.env.GITHUB_CLIENT_ID}&client_secret=${process.env.GITHUB_CLIENT_SECRET}&code=${code}`,
+        requestOptions
+    );
+
+    const data = await response.json();
+    // console.log(data);
+    return data.access_token;
+};
+
+const fetchGithubData = async (access_token) => {
+    var myHeaders = new fetch.Headers();
+    myHeaders.append("Authorization", `token ${access_token}`);
+
+    var requestOptions = {
+        method: "GET",
+        headers: myHeaders,
+    };
+
+    const response = await fetch("https://api.github.com/user", requestOptions);
+    const data = await response.json();
+    return data;
+};
+
+const fetchEmailfromGithub = async (access_token) => {
+    var myHeaders = new fetch.Headers();
+    myHeaders.append("Authorization", `token ${access_token}`);
+
+    var requestOptions = {
+        method: "GET",
+        headers: myHeaders,
+    };
+
+    const response = await fetch(
+        "https://api.github.com/user/emails",
+        requestOptions
+    );
+    const data = await response.json();
+    // console.log(data[0].email);
+    return data[0].email;
+};
 
 exports.githublogin = async (req, res) => {
     const { code } = req.body;
-    const access_token = await getAccessToken({
-        code,
-        client_id,
-        client_secret,
-    });
-    const user = await fetchGitHubUser(access_token);
-    const ID = user.id;
-    const login = user.login;
-
-    User.findOne({ githubID: ID }, (err, saveduser) => {
+    const access_token = await getAccessTokenGithub(code);
+    const data = await fetchGithubData(access_token);
+    const email = await fetchEmailfromGithub(access_token);
+    if (!email) {
+        res.status(401).json({
+            error: true,
+            errorBody: "Email not found!",
+        });
+    }
+    User.findOne({ email }, { password: 0 }, (err, saveduser) => {
         if (err) {
             res.status(500).json({
-                message: {
-                    msgError: true,
-                    msgBody: "Something went wrong!",
-                },
+                error: true,
+                errorBody: "Internal Server Error 1",
             });
         } else {
             if (saveduser) {
@@ -392,33 +469,44 @@ exports.githublogin = async (req, res) => {
                 res.status(200).json({
                     token,
                     isAuthenticated: true,
-                    message: {
-                        msgError: false,
-                        msgBody: "Login Successful",
-                    },
+                    user: saveduser,
+                    error: false,
+                    message: "Login Successful",
                 });
             } else {
                 //user is not registered
-                let password = login;
+                const picture = data.avatar_url;
+                let password = data.id + process.env.GITHUB_CLIENT_ID;
+                let name;
+                if (data.name) {
+                    name = data.name;
+                } else {
+                    name = data.login;
+                }
                 bcrypt.hash(password, 12).then((hashpassword) => {
                     const newUser = new User({
-                        name: login,
-                        githubID: ID,
+                        email,
+                        name,
+                        githubID: data.id,
                         active: true,
+                        picture,
                         password: hashpassword,
                     });
-                    newUser.save((err) => {
+                    newUser.save((err, user) => {
                         if (err) {
                             res.status(500).json({
-                                message: {
-                                    msgError: true,
-                                    msgBody: "Error has occured",
-                                },
+                                error: true,
+                                errorBody: "Internal Server Error 2",
                             });
                         } else {
+                            const token = signToken(user._id);
+                            user.password = undefined; //to remove password field from the user
                             res.status(201).json({
-                                message: "Account successfully created",
+                                token,
+                                isAuthenticated: true,
+                                user: user,
                                 error: false,
+                                message: "Account Created Succefully",
                             });
                         }
                     });

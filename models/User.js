@@ -12,22 +12,22 @@ const UserSchema = new mongoose.Schema(
     {
         email: {
             type: String,
-            // required: true,
-               index: true,
-               unique: true,
+            required: true,
+            index: true,
+            unique: true,
         },
-         githubID: {
-                type: String,
-         },
-         facebookID: {
-                type: String,
-         },
-          googleID: {
-                type: String,
-            }, 
-            linkedinID: {
-                type: String,
-            },
+        githubID: {
+            type: String,
+        },
+        facebookID: {
+            type: String,
+        },
+        googleID: {
+            type: String,
+        },
+        linkedinID: {
+            type: String,
+        },
 
         name: {
             type: String,
