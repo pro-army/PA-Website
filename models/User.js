@@ -12,19 +12,30 @@ const UserSchema = new mongoose.Schema(
     {
         email: {
             type: String,
-            required: true,
+            // required: true,
             index: true,
             unique: true,
         },
+        socialID: {
+            googleID: {
+                type: String,
+            },
+            facebookID: {
+                type: String,
+            },
+            githubID: {
+                type: String,
+            },
+            linkedinID: {
+                type: String,
+            },
+        },
         name: {
-            first_name: {
-                type: String,
-                required: true,
-            },
-            last_name: {
-                type: String,
-                required: true,
-            },
+            type: String,
+            default: "Soldier",
+        },
+        picture: {
+            type: String,
         },
         password: {
             type: String,
@@ -34,6 +45,27 @@ const UserSchema = new mongoose.Schema(
             type: Boolean,
             default: false,
         },
+        role: {
+            type: String,
+            enum: ["user", "admin"],
+            default: "user",
+        },
+        contribution_points: {
+            type: Number,
+            default: 0,
+        },
+        articles: [
+            {
+                type: mongoose.Schema.Types.ObjectId,
+                ref: Article,
+            },
+        ],
+        // videos: [
+        //     {
+        //         type: mongoose.Schema.Types.ObjectId,
+        //         ref: Video,
+        //     },
+        // ],
         todos: [
             {
                 type: mongoose.Schema.Types.ObjectId,
