@@ -188,3 +188,74 @@ exports.facebooklogin = async (req, res) => {
             });
         });
 };
+
+// Linkedin
+exports.linkedinlogin = async (req, res) => {
+    const { code } = req.body.data;
+    console.log(code);
+    res.status(200).json({ error: false });
+    // fetch(urlGraphFacebook, {
+    //     method: "GET",
+    // })
+    //     .then((res) => res.json())
+    //     .then((data) => {
+    //         // console.log("From facebook", data);
+    //         const { email, name } = data;
+    //         User.findOne({ email }, { password: 0 }, (err, saveduser) => {
+    //             if (err) {
+    //                 res.status(500).json({
+    //                     message: {
+    //                         msgError: true,
+    //                         msgBody: "Something went wrong!",
+    //                     },
+    //                 });
+    //             } else {
+    //                 if (saveduser) {
+    //                     //user already have an account
+    //                     const token = signToken(saveduser._id);
+    //                     res.status(200).json({
+    //                         token,
+    //                         user: saveduser,
+    //                         isAuthenticated: true,
+    //                         message: {
+    //                             msgError: false,
+    //                             msgBody: "Login Successful",
+    //                         },
+    //                     });
+    //                 } else {
+    //                     //user is not registered
+    //                     let password = email + process.env.Google_Secret;
+    //                     bcrypt.hash(password, 12).then((hashpassword) => {
+    //                         const newUser = new User({
+    //                             email,
+    //                             name,
+    //                             socialID: {
+    //                                 facebookID: data.userID,
+    //                             },
+    //                             active: true,
+    //                             picture: data.picture.data.url,
+    //                             password: hashpassword,
+    //                         });
+    //                         newUser.save((err) => {
+    //                             if (err)
+    //                                 res.status(500).json({
+    //                                     message: {
+    //                                         msgError: true,
+    //                                         msgBody: "Error has occured",
+    //                                     },
+    //                                 });
+    //                             else
+    //                                 res.status(201).json({
+    //                                     message: {
+    //                                         msgError: false,
+    //                                         msgBody:
+    //                                             "Account successfully created",
+    //                                     },
+    //                                 });
+    //                         });
+    //                     });
+    //                 }
+    //             }
+    //         });
+    //     });
+};

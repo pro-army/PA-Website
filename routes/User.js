@@ -40,6 +40,7 @@ var user_controller = require("../controller/user_controller");
 userRouter.post("/register", auth.register);
 userRouter.post("/login", auth.login);
 userRouter.post("/login/facebook", auth.facebooklogin);
+userRouter.post("/login/linkedin", auth.linkedinlogin);
 
 userRouter.get(
     "/isAuthenticated",

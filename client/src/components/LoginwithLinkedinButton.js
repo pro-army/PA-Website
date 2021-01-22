@@ -6,8 +6,9 @@ function LoginwithLinkedinButton() {
         console.log(response);
     };
     const handleSuccess = (response) => {
+        console.log(response);
         axios
-            .post("http://localhost:4000/api/auth/linkedin", {
+            .post("http://localhost:4000/api/user/login/linkedin", {
                 data: { code: response.code },
             })
             .then((response) => {
