@@ -351,14 +351,11 @@ exports.githublogin =  async (req,res)=>{
                                         });
                                     }
             
-                                        else{
-                                           res.status(201).json({
-                                            message: {
-                                                msgError: false,
-                                                msgBody:
-                                                    "Account successfully created",
-                                            },
-                                        });
+                                                else{
+                                                res.status(201).json({
+                                                message: "Account successfully created",
+                                                error: false,
+                                    });
                                     }
                                         
                                 });
