@@ -13,15 +13,24 @@ userRouter.post("/login/linkedin", auth.linkedinlogin);
 userRouter.post("/login/google", auth.googlelogin);
 userRouter.post("/login/github", auth.githublogin);
 
+// Example on how to use admin authorization
 userRouter.get(
-    "/isAuthenticated",
+    "/isAuthenticatedAdmin",
     passport.authenticate("jwt", { session: false }), //middleware to check the authorization status of user
+    auth.isAdmin,
     auth.isAuthenticated
 );
+
 userRouter.post(
     "/createTodo",
     passport.authenticate("jwt", { session: false }), //middleware to check the authorization status of user
     user_controller.createTodo
+);
+
+userRouter.get(
+    "/isAuthenticated",
+    passport.authenticate("jwt", { session: false }), //middleware to check the authorization status of user
+    auth.isAuthenticated
 );
 
 // get info about user profile and the todos that person has created
