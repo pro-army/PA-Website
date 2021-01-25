@@ -27,6 +27,19 @@ const signToken = (userID) => {
     );
 };
 
+exports.isAdmin = (req, res, next) => {
+    const { role } = req.user;
+    console.log("role is ", role);
+    if (role !== "admin") {
+        res.status(401).json({
+            error: true,
+            errorBody: "User not authorized",
+        });
+    } else {
+        next();
+    }
+};
+
 exports.register = async (req, res) => {
     const { email, first_name, last_name, password } = req.body;
     const { errors, isValid } = validateRegisterInput(req.body);
