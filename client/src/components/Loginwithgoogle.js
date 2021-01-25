@@ -5,14 +5,15 @@ import axios from 'axios'
 function LoginGoogle() {
 
     const responseSuccessGoogle=(response)=>{
-      //console.log(response.googleId)
+      
         axios({
           method:"POST",
           url:"http://localhost:4000/api/user/login/google",
           data:{tokenId:response.tokenId,googleId:response.googleId}
         }).then(response=>{
     
-          console.log(response.data.message.msgBody)
+          console.log(response.data.message)
+          console.log(response.data.user)
     
         })
         .catch(err=>console.log(err))
