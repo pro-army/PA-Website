@@ -1,7 +1,8 @@
 // Import the necessary packages
 const express = require("express");
 const router = express.Router();
-
+const auth = require("../controller/auth");
+const passport = require("passport");
 // Getting Controllers from Controllers File
 const SecretCode = require("../controller/SecretCode");
 

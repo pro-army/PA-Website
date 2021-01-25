@@ -6,6 +6,7 @@ const bcrypt = require("bcrypt");
 // import user-defidned modules
 const Article = require("./Article");
 const Todo = require("./Todo");
+const Editorial = require("./Editorial");
 
 // Create Schema for Article
 const UserSchema = new mongoose.Schema(
@@ -76,6 +77,12 @@ const UserSchema = new mongoose.Schema(
             {
                 type: mongoose.Schema.Types.ObjectId,
                 ref: Article,
+            },
+        ],
+        editorials: [
+            {
+                type: mongoose.Schema.Types.ObjectId,
+                ref: Editorial,
             },
         ],
     },

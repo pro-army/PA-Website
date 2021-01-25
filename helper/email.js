@@ -9,6 +9,10 @@ const sendLink = async (email_id, link = "") => {
     await main(email_id, link, subject).catch(console.error);
 };
 
+const sendMail = async (email_id, subject) => {
+    await main(email_id, "/", subject).catch(console.error);
+};
+
 const main = async (email_id, link, subject) => {
     let transporter = nodemailer.createTransport({
         service: "gmail",
@@ -52,4 +56,5 @@ const main = async (email_id, link, subject) => {
 
 module.exports = {
     sendLink,
+    sendMail,
 };

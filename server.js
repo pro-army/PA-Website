@@ -59,6 +59,18 @@ app.use("/api", contributorsRouter);
 const articleRouter = require("./routes/Article");
 app.use("/api/article", articleRouter);
 
+const EditorialRouter = require("./routes/Editorial");
+app.use("/api/editorial", EditorialRouter);
+
+const SubscribeRouter = require("./routes/Subscribe");
+app.use("/api/subscribe", SubscribeRouter);
+
+const ContestRouter = require("./routes/Contest");
+app.use("/api/contest", ContestRouter);
+
+const WebinarRouter = require("./routes/Webinar");
+app.use("/api/webinar", WebinarRouter);
+
 // ******************************
 
 // Start the server in the specified port number which is there in the environment variable

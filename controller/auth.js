@@ -7,6 +7,7 @@ const { OAuth2Client } = require("google-auth-library");
 
 //validate
 const validateRegisterInput = require("../validation/register_validate");
+const SecretCode = require("./SecretCode");
 // import user-defidned modules or Schema
 const User = require("../models/User");
 const Todo = require("../models/Todo");
@@ -55,10 +56,13 @@ exports.register = async (req, res) => {
                 errorBody: "Email is already taken",
             });
         else {
+            const picture =
+                req.body.picture ||
+                `https://ui-avatars.com/api/?name=${first_name}&background=random`;
             const newUser = new User({
                 email,
                 name: first_name + " " + last_name,
-                picture: `https://ui-avatars.com/api/?name=${first_name}&background=random`,
+                picture,
                 password,
             });
             newUser.save((err) => {
@@ -67,11 +71,14 @@ exports.register = async (req, res) => {
                         error: true,
                         errorBody: "Error has occured",
                     });
-                else
+                else {
+                    SecretCode.codegen(email);
                     res.status(201).json({
-                        message: "Account successfully created",
+                        message:
+                            "Account successfully created, Please Verify Your Email Id by Clicking the Sent Link",
                         error: false,
                     });
+                }
             });
         }
     });
@@ -92,6 +99,15 @@ exports.login = async (req, res) => {
             res.status(401).json({
                 error: true,
                 errorBody: "Email not registered",
+            });
+        }
+        // if no user exist
+        else if (user.active === false) {
+            SecretCode.codegen(user.email);
+            res.status(403).json({
+                error: true,
+                errorBody:
+                    "User Registered but Not Verified,Please Click on link sent to your email to verify",
             });
         }
         // check if password is correct
@@ -335,7 +351,7 @@ const client = new OAuth2Client(ClientId);
 
 exports.googlelogin = async (req, res) => {
     const { tokenId, googleId } = req.body;
-    
+
     client
         .verifyIdToken({ idToken: tokenId, audience: ClientId })
         .then((response) => {
@@ -344,27 +360,24 @@ exports.googlelogin = async (req, res) => {
                 //console.log("hiiii")
                 User.findOne({ email }, { password: 0 }, (err, saveduser) => {
                     if (err) {
-                        
                         res.status(500).json({
                             error: true,
                             errorBody: "Internal Server Error",
                         });
                     } else {
                         if (saveduser) {
-                            
                             //user already have an account
                             const token = signToken(saveduser._id);
                             res.status(200).json({
                                 token,
                                 isAuthenticated: true,
                                 error: false,
-                                user:saveduser,
+                                user: saveduser,
                                 message: "Login Successful",
                             });
-                        } 
-                        else {
+                        } else {
                             //user is not registered
-                            
+
                             let password = googleId + process.env.Google_Secret;
                             bcrypt.hash(password, 12).then((hashpassword) => {
                                 const newUser = new User({
@@ -377,14 +390,12 @@ exports.googlelogin = async (req, res) => {
                                 });
 
                                 newUser.save((err, user) => {
-                                    if (err)
-                                      {
+                                    if (err) {
                                         res.status(500).json({
                                             error: true,
                                             errorBody: "Internal Server Error",
                                         });
-                                      }  
-                                    else {
+                                    } else {
                                         const token = signToken(user._id);
                                         user.password = undefined; //to remove password field from the user
                                         res.status(201).json({
@@ -392,7 +403,8 @@ exports.googlelogin = async (req, res) => {
                                             isAuthenticated: true,
                                             user: user,
                                             error: false,
-                                            message:"Account Created Succefully",
+                                            message:
+                                                "Account Created Succefully",
                                         });
                                     }
                                 });
