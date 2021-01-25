@@ -326,29 +326,36 @@ const client = new OAuth2Client(ClientId);
 
 exports.googlelogin = async (req, res) => {
     const { tokenId, googleId } = req.body;
+    
     client
         .verifyIdToken({ idToken: tokenId, audience: ClientId })
         .then((response) => {
             const { email_verified, email, name, picture } = response.payload;
             if (email_verified) {
+                //console.log("hiiii")
                 User.findOne({ email }, { password: 0 }, (err, saveduser) => {
                     if (err) {
+                        
                         res.status(500).json({
                             error: true,
                             errorBody: "Internal Server Error",
                         });
                     } else {
                         if (saveduser) {
+                            
                             //user already have an account
                             const token = signToken(saveduser._id);
                             res.status(200).json({
                                 token,
                                 isAuthenticated: true,
                                 error: false,
+                                user:saveduser,
                                 message: "Login Successful",
                             });
-                        } else {
+                        } 
+                        else {
                             //user is not registered
+                            
                             let password = googleId + process.env.Google_Secret;
                             bcrypt.hash(password, 12).then((hashpassword) => {
                                 const newUser = new User({
@@ -362,10 +369,12 @@ exports.googlelogin = async (req, res) => {
 
                                 newUser.save((err, user) => {
                                     if (err)
+                                      {
                                         res.status(500).json({
                                             error: true,
                                             errorBody: "Internal Server Error",
                                         });
+                                      }  
                                     else {
                                         const token = signToken(user._id);
                                         user.password = undefined; //to remove password field from the user
@@ -374,8 +383,7 @@ exports.googlelogin = async (req, res) => {
                                             isAuthenticated: true,
                                             user: user,
                                             error: false,
-                                            message:
-                                                "Account Created Succefully",
+                                            message:"Account Created Succefully",
                                         });
                                     }
                                 });
