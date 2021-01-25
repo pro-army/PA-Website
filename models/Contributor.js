@@ -24,7 +24,7 @@ const ContributorSchema = new mongoose.Schema(
         articles: [
             {
                 type: mongoose.Schema.Types.ObjectId,
-                ref: Article,
+                ref: "Article",
             },
         ],
     },

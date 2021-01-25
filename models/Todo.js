@@ -14,11 +14,12 @@ const TodoSchema = new mongoose.Schema(
             required: true,
         },
         status: {
-            type: Boolean,
+            type: Boolean, // true indicates completed and false indicates pending
+            default: false,
         },
         owner: {
             type: mongoose.Schema.Types.ObjectId,
-            required: true,
+            ref: "User",
         },
     },
     {

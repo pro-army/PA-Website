@@ -28,13 +28,14 @@ const UserSchema = new mongoose.Schema(
         linkedinID: {
             type: String,
         },
-
         name: {
             type: String,
             default: "Soldier",
         },
         picture: {
             type: String,
+            default:
+                "https://ui-avatars.com/api/?name=Soldier&background=random",
         },
         password: {
             type: String,

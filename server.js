@@ -8,9 +8,6 @@ require("dotenv").config();
 const ejs = require("ejs");
 const path = require("path");
 
-
-
-
 // Importing the user-defined modules here
 const User = require("./models/User");
 
@@ -58,6 +55,9 @@ app.use("/api/verify", verifyRouter);
 
 const contributorsRouter = require("./routes/Contributors");
 app.use("/api", contributorsRouter);
+
+const articleRouter = require("./routes/Article");
+app.use("/api/article", articleRouter);
 
 // ******************************
 

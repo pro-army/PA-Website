@@ -1,9 +1,6 @@
-const express = require("express");
-const userRouter = express.Router();
 const passport = require("passport");
 const passportConfig = require("../passport");
 const JWT = require("jsonwebtoken");
-const crypto = require("crypto");
 const bcrypt = require("bcryptjs");
 const fetch = require("node-fetch");
 const { OAuth2Client } = require("google-auth-library");
@@ -29,7 +26,6 @@ const signToken = (userID) => {
 
 exports.isAdmin = (req, res, next) => {
     const { role } = req.user;
-    console.log("role is ", role);
     if (role !== "admin") {
         res.status(401).json({
             error: true,
