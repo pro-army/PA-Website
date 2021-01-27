@@ -1,0 +1,43 @@
+.login__card {
+    display: flex;
+}
+
+.create__newaccount {
+    display: flex;
+}
+
+.forgot__password {
+    padding-left: 230px;
+}
+
+.loginto__previousaccount {
+    display: flex;
+    font-size: 15px;
+    cursor:pointer;
+    margin-left: 10vw;
+}
+
+.password__field {
+    display: flex;
+    flex-direction: column;
+    height: 13vh;
+}
+.login-signin-button-container {
+    justify-content: space-between;
+    display:flex;
+    flex-direction: column; 
+    margin-top: 10vh;
+    height: 10vh;
+}
+
+.login-button {
+    border-radius: 10px;
+    background-color: #F2F2F2;
+    cursor: pointer;
+}
+
+.signin-button {
+    background-color:  white;
+    border-radius: 10px;
+    cursor: pointer;
+}

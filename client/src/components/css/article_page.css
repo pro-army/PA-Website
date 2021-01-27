@@ -1,0 +1,119 @@
+.article-page-main-container {
+    display: flex;
+    flex-direction: row;
+    margin-top: 3vh;
+}
+
+.article-page-main-left-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: left;
+    align-items: left;
+    padding: 1vh;
+    padding-top: 1.5vh;
+}
+
+.article-page-main-left-container-search-box {
+    display: flex;
+    flex-direction: column;
+    max-width: 13vw;
+    padding-left: 1vw;
+    justify-content: left;
+    align-items: left;
+    box-shadow: 0 0 8px -4px rgba(0,0,0,.5);
+    border-radius: 25px;
+    margin-bottom: 2vh;
+    padding-bottom: 1vh;
+}
+
+.article-page-main-left-container-topic-names {
+    display:flex;
+    flex-direction: column;
+    padding: 0.5vh;
+    max-width: 11.5vw;
+    font-weight: bold;
+    font-size: 2.5vh;
+    font-family: 'Prompt', sans-serif;
+    transition: all 1.5s;
+}
+.article-page-main-left-container-topic-names:hover {
+    background-color: #62F2AD;
+}
+
+.article-related-videos-discuss {
+    margin-left: 1vh;
+}
+.article-page-main-left-container-todo-bookmark-rate-box {
+    display: flex;
+    flex-direction: column;
+    box-shadow: 0 0 8px -4px rgba(0,0,0,.5);
+    border-radius: 25px;
+    max-width: 13vw;
+    padding: 1.5vh;
+}
+
+.article-page-main-left-container-todo-bookmark-rate-box-text {
+    display: flex;
+    flex-direction: row;
+    padding: 1vh;
+    font-family: 'Inter', sans-serif;
+    align-items: center;
+}
+
+.article-page-main-right-container {
+    display: flex;
+    flex-direction: column;
+    height: 95vh;
+}
+
+.article-related-vids-discuss-nav-button {
+    border-radius: 20px;
+    padding: 1vh;
+    font-family: 'Inter', sans-serif;
+}
+
+.article-page-main-right-container-content {
+    width: 83vw;
+    height: 95vh;
+    background-color: #F8F8F8;
+    box-shadow: 0 0 8px -4px rgba(0,0,0,.5);
+    margin-top: 2vh; 
+    border-radius: 25px;
+    justify-content: center;
+    align-items: center;
+}
+
+.article-page-main-right-container-content-topic-name-share-icon {
+    width: 80vw;
+    display: flex;
+    margin: 1vw;
+    flex-direction: row;
+    align-items: center;
+}
+
+.article-page-main-right-container-content-topic-name {
+    font-family: 'Prompt', sans-serif;
+    font-size: 4.5vw;
+    font-weight: 800;
+    margin-right: 33vw;
+}
+
+.article-page-main-right-container-upper {
+    display: flex;
+    margin: 0;
+    padding: 0;
+    background-color: #F8F8F8;
+}
+
+.article-page-main-right-container-content-profile-details {
+    display: flex;
+    align-items: center;
+    margin-right: 58vw;
+}
+
+.article-page-main-right-container-content-profile-details-social-icons {
+    display: flex;
+    align-items: center;
+    padding: 1.5vw;
+    padding-bottom: 0vh;
+}
