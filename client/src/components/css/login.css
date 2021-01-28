@@ -1,0 +1,74 @@
+.login-signup-container {
+display:flex;
+width: 40vw;
+margin-left: 30vw;
+}
+
+.login__card {
+    display: flex;
+}
+
+.create__newaccount {
+    display: flex;
+}
+
+.login-signin-button-text {
+    color:black;
+    transform: rotate(90deg);
+}
+
+.app {
+    height: 100vh;
+}
+
+.login-card-green-dot-1 {
+    margin-left: -1.25vw;
+    margin-top: -1vh;
+    margin-bottom: -10vh;
+    width: 150px;
+    height: 150px;
+    background: #62F2AD;
+    border-radius: 13px 0 150px 0;
+    -moz-border-radius: 13px 0 150px 0;
+    -webkit-border-radius: 13px 0 150px 0;
+}
+
+.login-card-green-dot-2 {
+    width: 100px;
+    height: 50px;
+    background: #62F2AD;
+    border-radius: 100px 100px 0 0;
+    -moz-border-radius: 100px 100px 0 0;
+    -webkit-border-radius: 100px 100px 0 0;
+}
+
+.login-card-green-dot-3 {
+    margin-left: 26.15vw;
+    margin-top: -25vh;
+    width: 3vw;
+    height: 15vh;
+    background: #62F2AD;
+    border-radius: 100px 0 0 100px;
+    -moz-border-radius: 100px 0 0 100px;
+    -webkit-border-radius: 100px 0 0 100px;
+}
+
+.login-signin-button-container {
+    justify-content: space-between;
+    display:flex;
+    flex-direction: column; 
+    margin-top: 10vh;
+    height: 10vh;
+}
+
+.login-button {
+    border-radius: 10px;
+    background-color: white;
+    cursor: pointer;
+}
+
+.signin-button {
+    background-color:  #F2F2F2;
+    border-radius: 10px;
+    cursor: pointer;
+}

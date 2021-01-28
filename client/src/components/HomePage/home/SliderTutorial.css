@@ -1,0 +1,79 @@
+div.topics-slider {
+  /* border: 1px solid; */
+  width: 21vw;
+  padding: 3.5vw 0px;
+  margin: 1.5vw 0px 1.5vw 1.5vw;
+  position: relative;
+  display: block;
+  /* padding: 20px; */
+}
+
+div.newApp {
+  /* border: 1px solid; */
+}
+
+div.newApp div.slider-element {
+  cursor: pointer;
+  border: 1px solid gray;
+  border-bottom-left-radius: 15px;
+  border-top-left-radius: 15px;
+  display: inline-block;
+  width: 99%;
+  padding: 0;
+  overflow: visible;
+}
+
+div.newApp div.slider-element h3 {
+  font-size: 1.5vw;
+}
+
+div.newApp div.slick-current {
+  box-shadow: 0px 1px 10px rgb(131, 131, 131);
+}
+
+div.topics-slider button.prev-button,
+button.next-button {
+  font-size: 5.8vw;
+  width: 5.5vw;
+  height: 5.5vw;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: absolute;
+  background: white;
+  outline: none;
+  cursor: pointer;
+  border: none;
+  left: 8vw;
+  box-shadow: 1px 2px 5px rgb(104, 104, 104);
+}
+
+div.topics-slider button.prev-button {
+  top: -0.8vw;
+}
+
+div.topics-slider button.next-button {
+  bottom: 1.2vw;
+}
+
+div.topics-slider button.prev-button .fas {
+  margin-top: -0.7vw;
+}
+
+div.topics-slider button.next-button .fas {
+  margin-top: -1.5vw;
+}
+
+@media only screen and (max-width: 759px) {
+
+  div.topics-slider button.prev-button,
+  button.next-button {
+    left: 10vw;
+  }
+
+  div.topics-slider button.next-button {
+    bottom: 3vw;
+  }
+
+}

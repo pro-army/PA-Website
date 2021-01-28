@@ -1,0 +1,78 @@
+.main-container{
+    display:flex;
+    flex-direction:column;
+    margin-top: 2vh;
+    align-items: center;
+    justify-content: center;
+} 
+
+.upper-background {
+    background-color: rgb(5, 56, 107);
+    height: 40vh;
+    width: 98vw;
+    border-radius: 25px;
+    margin-bottom: -5vh;
+}
+
+.details-block {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.left-details-block {
+    background-color: #FFFFFF;
+    box-shadow: 0 0 8px -4px rgba(0,0,0,.5);
+    border-radius: 25px;
+}
+
+.profile-pic {
+    /* box-shadow: 0 0 8px -4px rgba(0,0,0,.5); */
+    padding: 1vw;
+    border-radius: 25px;
+}
+
+.profile-name-username {
+    padding-top: 4vh;
+    padding-left: 3vh;
+}
+
+.profile-name {
+    font-family: Montserrat;
+    font-weight: 600;
+    padding-bottom:1vh;
+}
+.profile-username {
+    font-family: Montserrat;
+}
+
+.profile-companies-logo {
+    width: 3vw;
+    height: 3vw; 
+    object-fit: cover;
+}
+
+.right-details-block {
+    background-color: #FFFFFF;
+}
+
+.profilepage-articles-block{
+    display: flex;
+    background-color: white;
+    justify-content: center;
+    align-items: center;
+}
+
+.profilepage-articles-block > p{
+    font-family: Montserrat;
+    font-weight: 600;
+    padding:1vh;
+    padding-left:3vw;
+    padding-right:3vw;
+}
+
+.profilepage-videos-block{
+    display: flex;
+    background-color: white;
+    justify-content: center;
+    align-items: center;
+}

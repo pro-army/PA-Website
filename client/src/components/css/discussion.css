@@ -1,0 +1,56 @@
+.discussion-profile-container {
+    height: 50vh;   
+    overflow: scroll;
+    overflow-x: hidden;
+}
+
+.discussion-profile-content {
+    /* overflow: scroll;
+    overflow-x: hidden; */
+    /* box-shadow: 0 0 8px -4px rgba(0,0,0,.5); */
+}
+
+.discussion-profile-details-icons {
+   width: 78vw;
+   margin-left: 1.5vw;
+   padding: 1vw;
+   margin-top: 3vh;
+   margin-right: 5vw;
+   box-shadow: 0 0 8px -4px rgba(0,0,0,.5);
+}
+
+.discussion-profile-details {
+    display: flex;
+    align-items: center;
+    margin-right: 58vw;
+}
+
+.discussion-details {
+    display: flex;
+    font-family: 'Montserrat';
+    font-size: 2vh;
+}
+
+.discussion-icons {
+    display: flex;
+    flex-direction: row;
+    width: 13vw;
+    margin-top: 1vh;
+    justify-content: space-between;
+}
+
+.discussion-post-container {
+    display:flex;
+    flex-direction: column;
+    box-shadow: 0 0 8px -4px rgba(0,0,0,.5);
+}
+
+.button-clear-post-style-container {
+    justify-content: right;
+}
+
+.discussion-post-textarea {
+    width: 80vw;
+    height: 20vh;
+    margin: 1.5vw;  
+}

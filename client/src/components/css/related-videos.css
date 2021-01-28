@@ -1,0 +1,48 @@
+.related-videos-all {
+    display: flex;
+    flex-direction: column;
+}
+
+.related-videos-videos-description-share-icon {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    margin: 3vh;
+}
+
+.related-videos {
+    display: flex;
+    border: 1px solid;
+    border-radius: 25px;
+    /* background-color: #9cadbe; */
+
+    background: radial-gradient(100.46% 452.58% at 0% 50%, rgba(5, 56, 107, 0.6) 0%, rgba(255, 255, 255, 0) 100%);
+    padding: 1vh;
+    width: 72vw;
+}
+
+.related-videos-videos {
+    width: 30vw;
+    height: 40vh;
+    border-radius: 2px;
+}
+
+.related-videos-title-description-creator {
+    display: flex;
+    flex-direction: column;
+    margin-left: 2vw;
+    margin-top: 1.5vw;
+}
+
+.related-videos-title {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 3vw;
+    font-weight: 800;
+}
+
+
+.related-videos-description-creator {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 1.3vw;
+    font-weight: 700;
+}
