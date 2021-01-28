@@ -1,7 +1,12 @@
-.login-signup-container {
-display:flex;
-width: 40vw;
-margin-left: 30vw;
+.login-container {
+    z-index: 1;
+    position: relative;
+    display:flex;
+    width: 34vw;
+    height: 60vh;
+    margin-left: 33vw;
+    margin-top: 20vh;
+    background: url('../../image_assets/login-signup/LoginCardBackground.svg');
 }
 
 .login__card {
@@ -22,9 +27,9 @@ margin-left: 30vw;
 }
 
 .login-card-green-dot-1 {
-    margin-left: -1.25vw;
-    margin-top: -1vh;
-    margin-bottom: -10vh;
+    z-index: 2;
+    margin-top: 1vh;
+    margin-right: -7.8vw;
     width: 150px;
     height: 150px;
     background: #62F2AD;
@@ -40,6 +45,7 @@ margin-left: 30vw;
     border-radius: 100px 100px 0 0;
     -moz-border-radius: 100px 100px 0 0;
     -webkit-border-radius: 100px 100px 0 0;
+    
 }
 
 .login-card-green-dot-3 {
@@ -54,21 +60,59 @@ margin-left: 30vw;
 }
 
 .login-signin-button-container {
-    justify-content: space-between;
+    position: relative;
+    /* left: 0; */
+    /* padding:0; */
+    margin-bottom: 5vh;
+    /* justify-content: space-between; */
     display:flex;
-    flex-direction: column; 
-    margin-top: 10vh;
-    height: 10vh;
+    /* flex-direction: column; */
+    margin-left: -1.6vw;
+    /* margin-right: vw; */
 }
 
 .login-button {
-    border-radius: 10px;
+    text-align: center;
+    justify-content: center;
     background-color: white;
-    cursor: pointer;
+    /* cursor: pointer; */
+    padding: 2vh;
+    margin-bottom: 3.1vw;
+    border-radius: 5px 5px 0px 0px;
 }
 
 .signin-button {
-    background-color:  #F2F2F2;
-    border-radius: 10px;
+    background-color: #F2F2F2;
+    text-align: center;
+    justify-content: center;
+    border-radius: 5px 5px 0px 0px;
     cursor: pointer;
+    padding: 2vh;
+    width: 4vw;
+}
+
+.girl-with-laptop {
+    width:6.5vw;
+    height: 30vh;
+    position: absolute;
+    z-index: 2;
+    margin-left: 80vw;
+    margin-top: -19vh;
+}
+
+.background-with-trees {
+    width:90vw;
+    height: 80vh;
+    position: absolute;
+    z-index: -1;
+    margin-left: -8vw;
+    margin-top: -16vh;
+}
+.login-linkedin-github-google-facebook {
+    display: flex;
+}
+
+.login-items-position {
+    margin-left: 5vw;
+    /* margin-left: 18vh; */
 }

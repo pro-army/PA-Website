@@ -7,6 +7,9 @@ import Container from "@material-ui/core/Container";
 import "../css/signup.css";
 import { AuthContext } from "../Context/AuthContext";
 import { useHistory } from "react-router-dom";
+import LoginCardBackground from '../../image_assets/login-signup/LoginCardBackground.svg'
+import BackgroundWithTrees from '../../image_assets/login-signup/BackgroundWithTrees.svg'
+import GirlWithLaptop from '../../image_assets/login-signup/Group 122.svg'
 import LinkedinLogin from "./LoginwithLinkedin";
 import LoginGoogle from "./Loginwithgoogle";
 import LoginFacebook from "./LoginwithFacebook";
@@ -50,6 +53,7 @@ const useStyles = makeStyles((theme) => ({
         fontWeight: '700',
     },
     'login-background': {
+        display: "flex",
         marginTop: '1vh',
         borderRadius: '15px',
         backgroundColor: '#05386B',
@@ -120,124 +124,125 @@ export default function Signup() {
     };
 
     return (
-        <div className='login-signup-container'>
-            <Container className={classes["login-background"]}>
-                <div className='login-card-green-dot-1' />
-                <Container component="Signup" maxWidth="sm">
-                    <div className={classes.paper}>
-
-                        <form className={classes.form} noValidate>
-                            <span Style="color:black;">Full Name*</span>
-                            <TextField
-                                variant="outlined"
-                                margin="normal"
-                                required
-                                fullWidth
-                                id="name"
-                                label="Enter your full name"
-                                name="name"
-                                value={user.name}
-                                onChange={changeHandler}
-                                error={user.name === ""}
-                            />
-                            {!user.name && <Message text="This field is mandatory" />}
-                            <span Style="color:black;">Email Address*</span>
-                            <TextField
-                                variant="outlined"
-                                margin="normal"
-                                required
-                                fullWidth
-                                id="email"
-                                label="Enter your email"
-                                value={user.email}
-                                name="email"
-                                autoComplete="off"
-                                onChange={changeHandler}
-                                error={user.email === ""}
-                            />
-                            {!isEmail(user.email) 
-                            && 
-                            (
-                                <Message text="Enter a valid email" />
-                            )
-                            }
-                            <div Style="display:flex;">
-                                <div className="password__field">
-                                    <div Style="color:black;display:flex;">
-                                        Create Password*
+        <div className='signup-items-position'>
+            <img src={GirlWithLaptop} className='girl-with-laptop' />
+            <img src={BackgroundWithTrees} className='background-with-trees' />
+            <div className='signup-container'>
+                <Container className={classes["login-background"]}>
+                    <Container component="Signup" maxWidth="sm">
+                        <div className={classes.paper}>
+                            <form className={classes.form} noValidate>
+                                <span Style="color:black;">Full Name*</span>
+                                <TextField
+                                    variant="outlined"
+                                    margin="normal"
+                                    required
+                                    fullWidth
+                                    id="name"
+                                    label="Enter your full name"
+                                    name="name"
+                                    value={user.name}
+                                    onChange={changeHandler}
+                                    error={user.name === ""}
+                                />
+                                {!user.name && <Message text="This field is mandatory" />}
+                                <span Style="color:black;">Email Address*</span>
+                                <TextField
+                                    variant="outlined"
+                                    margin="normal"
+                                    required
+                                    fullWidth
+                                    id="email"
+                                    label="Enter your email"
+                                    value={user.email}
+                                    name="email"
+                                    autoComplete="off"
+                                    onChange={changeHandler}
+                                    error={user.email === ""}
+                                />
+                                {!isEmail(user.email) 
+                                && 
+                                (
+                                    <Message text="Enter a valid email" />
+                                )
+                                }
+                                <div Style="display:flex;">
+                                    <div className="password__field">
+                                        <div Style="color:black;display:flex;">
+                                            Create Password*
+                                        </div>
+                                        <div Style="">
+                                            <TextField
+                                                variant="outlined"
+                                                margin="normal"
+                                                required="true"
+                                                name="password"
+                                                label="enter your password"
+                                                type="password"
+                                                id="password"
+                                                onChange={changeHandler}
+                                                value={user.password}
+                                                error={user.password === ""}
+                                            />
+                                        </div>
                                     </div>
-                                    <div Style="">
+                                    <div
+                                        className="password__field"
+                                        Style="padding-left:2vw;"
+                                    >
+                                        <div Style="color:black;display:flex;">
+                                            Confirm Password*
+                                        </div>
                                         <TextField
                                             variant="outlined"
                                             margin="normal"
-                                            required="true"
-                                            name="password"
-                                            label="enter your password"
+                                            required
+                                            name="confirmPassword"
+                                            label="confirm your password"
                                             type="password"
-                                            id="password"
+                                            id="confirmPassword"
+                                            value={user.confirmPassword}
                                             onChange={changeHandler}
-                                            value={user.password}
-                                            error={user.password === ""}
+                                            error={user.confirmPassword === ""}
                                         />
+                                        {
+                                        user.password !== user.confirmPassword && (
+                                            <Message text="Password Doesn't Match" />
+                                        )
+                                        }
                                     </div>
                                 </div>
-                                <div
-                                    className="password__field"
-                                    Style="padding-left:2vw;"
+                                
+                                {message.length ? (
+                                    <Message text={"Fill in correct Details"} />
+                                ) : null}
+                                <Button
+                                    type="submit"
+                                    variant="contained"
+                                    color="primary"
+                                    className={classes.submit}
+                                    onClick={submitHandler}
                                 >
-                                    <div Style="color:black;display:flex;">
-                                        Confirm Password*
-                                    </div>
-                                    <TextField
-                                        variant="outlined"
-                                        margin="normal"
-                                        required
-                                        name="confirmPassword"
-                                        label="confirm your password"
-                                        type="password"
-                                        id="confirmPassword"
-                                        value={user.confirmPassword}
-                                        onChange={changeHandler}
-                                        error={user.confirmPassword === ""}
-                                    />
-                                    {
-                                    user.password !== user.confirmPassword && (
-                                        <Message text="Password Doesn't Match" />
-                                    )
-                                    }
+                                    Signup
+                                </Button>
+                                <div className='login-linkedin-github-google-facebook'>
+                                        <LinkedinLogin />
+                                        <LoginGoogle />
+                                        <LoginFacebook />
+                                        <LoginwithGithub />
                                 </div>
-                            </div>
-                            
-                            {message.length ? (
-                                <Message text={"Fill in correct Details"} />
-                            ) : null}
-                            <Button
-                                type="submit"
-                                variant="contained"
-                                color="primary"
-                                className={classes.submit}
-                                onClick={submitHandler}
-                            >
-                                Signup
-                            </Button>
-
-                            <LinkedinLogin />
-                            <LoginGoogle />
-                            <LoginFacebook />
-                            <LoginwithGithub />
-                        </form>
+                            </form>
+                        </div>
+                    </Container>
+                    <div className='login-signin-button-container'>
+                        <Link href="./login">
+                            <div className="login-signin-button-text login-button" Style='text-decoration: none;'>Login</div>
+                        </Link>
+                        <Link href="./signup">
+                            <div className="login-signin-button-text signin-button" Style='text-decoration: none;'>Signup</div>
+                        </Link>
                     </div>
-                    <div className='login-card-green-dot-2' />
-                    <div className='login-card-green-dot-3' />
                 </Container>
-            </Container>
-            <div className='login-signin-button-container'>
-                <Link href="./login">
-                    <div className="login-signin-button-text login-button">Login</div>
-                </Link>
-                <Link href="./signup">
-                    <div className="login-signin-button-text signin-button">Signup</div>
-                </Link>
             </div>
         </div>
     );

@@ -1,6 +1,16 @@
 .login__card {
     display: flex;
 }
+.signup-container {
+    z-index: 1;
+    position: relative;
+    display:flex;
+    width: 34vw;
+    height: 60vh;
+    margin-left: 30vw;
+    margin-top: 20vh;
+    background: url('../../image_assets/login-signup/LoginCardBackground.svg');
+}
 
 .create__newaccount {
     display: flex;
@@ -22,22 +32,91 @@
     flex-direction: column;
     height: 13vh;
 }
+
+.signin-card-green-dot-1 {
+    z-index: 2;
+    margin-top: 1vh;
+    margin-right: -7.8vw;
+    width: 150px;
+    height: 150px;
+    background: #62F2AD;
+    border-radius: 13px 0 150px 0;
+    -moz-border-radius: 13px 0 150px 0;
+    -webkit-border-radius: 13px 0 150px 0;
+}
+
+.signin-card-green-dot-2 {
+    width: 100px;
+    height: 50px;
+    background: #62F2AD;
+    border-radius: 100px 100px 0 0;
+    -moz-border-radius: 100px 100px 0 0;
+    -webkit-border-radius: 100px 100px 0 0;
+    
+}
+
+.signin-card-green-dot-3 {
+    margin-left: 26.15vw;
+    margin-top: -25vh;
+    width: 3vw;
+    height: 15vh;
+    background: #62F2AD;
+    border-radius: 100px 0 0 100px;
+    -moz-border-radius: 100px 0 0 100px;
+    -webkit-border-radius: 100px 0 0 100px;
+}
+
+
 .login-signin-button-container {
-    justify-content: space-between;
+    /* position: relative; */
+    /* left: 0vw; */
+    /* justify-content: space-between; */
     display:flex;
-    flex-direction: column; 
-    margin-top: 10vh;
-    height: 10vh;
+    flex-direction: column;
+    /* margin-left: -5vw; */
 }
 
 .login-button {
-    border-radius: 10px;
-    background-color: #F2F2F2;
+    border-radius: 5px 5px 0px 0px;
+    text-align: center;
+    justify-content: center;
+    background-color: white;
     cursor: pointer;
+    padding: 2vh;
+    margin-bottom: 3.1vw;
 }
 
 .signin-button {
-    background-color:  white;
-    border-radius: 10px;
+    text-align: center;
+    justify-content: center;
+    border-radius: 5px 5px 0px 0px;
     cursor: pointer;
+    padding: 2vh;
+    width: 4vw;
+}
+
+.girl-with-laptop {
+    width:6.5vw;
+    height: 30vh;
+    position: absolute;
+    z-index: 2;
+    margin-left: 50vw;
+    margin-top: -19vh;
+}
+
+.background-with-trees {
+    width:90vw;
+    height: 80vh;
+    position: absolute;
+    z-index: -1;
+    margin-left: -8vw;
+    margin-top: -16vh;
+}
+.login-linkedin-github-google-facebook {
+    display: flex;
+}
+
+.signup-items-position {
+    margin-left: 8vw;
+    margin-left: 20vh;
 }
