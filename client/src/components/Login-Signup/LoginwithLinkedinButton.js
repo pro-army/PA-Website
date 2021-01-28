@@ -10,6 +10,9 @@ const useStyles = makeStyles((theme) => ({
         alignItems: 'center',
         backgroundColor: 'white',
         borderColor: 'white',
+        cursor: 'pointer',
+        border: 'none',
+        buttonStyle: 'none',
         boxShadow: '0 0 0 0 white',
         color: 'white',
         padding: 0,
@@ -39,13 +42,14 @@ function LoginwithLinkedinButton() {
     return (
         <div>
             <LinkedIn
+                className={classes['login-linkedin-icon']}
                 clientId="78gukwqbrxwsdg"
                 onFailure={handleFailure}
                 onSuccess={handleSuccess}
                 redirectUri="http://localhost:3000/linkedin"
                 scope="r_emailaddress,r_liteprofile"
                 renderElement={({ onClick, disabled }) => (
-                <button onClick={onClick} disabled={disabled}>
+                <button onClick={onClick} disabled={disabled} className={classes['login-linkedin-icon']}>
                     <img src={LinkedinIcon} alt='Google' className={classes['login-linkedin-icon']} />
                 </button>
                 )}

@@ -15,6 +15,12 @@ import LoginGoogle from "./Loginwithgoogle";
 import LoginFacebook from "./LoginwithFacebook";
 import LoginwithGithub from "./LoginwithGithub";
 import Message from "./Message";
+import GoogleIcon from '../../image_assets/login-signup/GoogleIcon.svg'
+import FacebookIcon from '../../image_assets/login-signup/FacebookIcon.svg'
+import LinkedinIcon from '../../image_assets/login-signup/LinkedinIcon.svg'
+import TelegramIcon from '../../image_assets/login-signup/TelegramIcon.svg'
+import YoutubeIcon from '../../image_assets/login-signup/YoutubeIcon.svg'
+import GithubIcon from '../../image_assets/login-signup/GithubIcon.svg'
 
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Prompt:wght@100&display=swap');
@@ -244,6 +250,30 @@ export default function Signup() {
                     </div>
                 </Container>
             </div>
+            <div className='signup-footer'>
+            <div Style='font-family:Montserrat;font-weight:700;'>Follow us on</div>
+            <div>
+                {/* <a href=''>
+                    <img src={GoogleIcon} alt='google' />
+                </a> */}
+                <a href='https://www.facebook.com/Programmers-Army-105809441239783'>
+                    <img src={FacebookIcon} alt='facebook' />
+                </a>
+                {/* <a href=''>
+                    <img src={TelegramIcon} alt='telegram' />
+                </a> */}
+                <a href='https://www.youtube.com/channel/UCRJS3O94F8cOj2U0gOUwmBA'>
+                    <img src={YoutubeIcon} alt='youtube' />
+                </a>
+                {/* <a href=''>
+                    <img src={LinkedinIcon} alt='Linkedin' />
+                </a> */}
+                <a href='https://twitter.com/ProgrammingArmy'>
+                    <img src={TwitterIcon} alt='Twitter' />
+                </a>
+            </div>
+            <div Style='font-family:Montserrat;font-weight:300;'>Copyright © Programmers Army All rights reserved 2020</div>
+        </div>
         </div>
     );
 }

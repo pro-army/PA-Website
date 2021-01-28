@@ -16,6 +16,13 @@ import LinkedinLogin from "./LoginwithLinkedin";
 import LoginGoogle from "./Loginwithgoogle";
 import LoginFacebook from "./LoginwithFacebook";
 import LoginwithGithub from "./LoginwithGithub";
+import GoogleIcon from '../../image_assets/login-signup/GoogleIcon.svg'
+import FacebookIcon from '../../image_assets/login-signup/FacebookIcon.svg'
+import LinkedinIcon from '../../image_assets/login-signup/LinkedinIcon.svg'
+import TelegramIcon from '../../image_assets/login-signup/TelegramIcon.svg'
+import YoutubeIcon from '../../image_assets/login-signup/YoutubeIcon.svg'
+import GithubIcon from '../../image_assets/login-signup/GithubIcon.svg'
+import TwitterIcon from '../../image_assets/login-signup/TwitterIcon.svg'
 
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Prompt:wght@100&display=swap');
@@ -66,7 +73,6 @@ const useStyles = makeStyles((theme) => ({
         // width: '50vw',
         paddingTop: '1vh',
         paddingBottom: '10vh',
-        paddingLeft: '8vh',
         paddingLeft: '3vw',
     },
     LoginCardBackground: {
@@ -201,32 +207,30 @@ export default function Login() {
                         </div>
                 </Container>
         </div>
-        <div>
-            <div>Follow us on</div>
+        <div className='login-footer'>
+            <div Style='font-family:Montserrat;font-weight:700;'>Follow us on</div>
             <div>
-                <a href=''>
-                    <img src='' alt='google' />
+                {/* <a href=''>
+                    <img src={GoogleIcon} alt='google' />
+                </a> */}
+                <a href='https://www.facebook.com/Programmers-Army-105809441239783'>
+                    <img src={FacebookIcon} alt='facebook' />
                 </a>
-                <a href=''>
-                    <img src='' alt='google' />
+                {/* <a href=''>
+                    <img src={TelegramIcon} alt='telegram' />
+                </a> */}
+                <a href='https://www.youtube.com/channel/UCRJS3O94F8cOj2U0gOUwmBA'>
+                    <img src={YoutubeIcon} alt='youtube' />
                 </a>
-                <a href=''>
-                    <img src='' alt='google' />
-                </a>
-                <a href=''>
-                    <img src='' alt='google' />
-                </a>
-                <a href=''>
-                    <img src='' alt='google' />
-                </a>
-                <a href=''>
-                    <img src='' alt='Telegram' />
+                {/* <a href=''>
+                    <img src={LinkedinIcon} alt='Linkedin' />
+                </a> */}
+                <a href='https://twitter.com/ProgrammingArmy'>
+                    <img src={TwitterIcon} alt='Twitter' />
                 </a>
             </div>
-            <div>Copyright © Programmers Army All rights reserved 2020</div>
+            <div Style='font-family:Montserrat;font-weight:300;'>Copyright © Programmers Army All rights reserved 2020</div>
         </div>
-        {/* <div className='login-card-green-dot-2' />
-        <div className='login-card-green-dot-3' /> */}
     </div>
     );
 }

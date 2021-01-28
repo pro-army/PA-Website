@@ -6,14 +6,17 @@ import { makeStyles } from "@material-ui/core/styles";
 
 const useStyles = makeStyles((theme) => ({
     'login-google-icon': {
-      justifyContent: 'center',
+        // width: '1vw',
+        justifyContent: 'center',
         alignItems: 'center',
-      backgroundColor: 'white',
-      borderColor: 'white',
-      boxShadow: '0 0 0 0 white',
-      color: 'white',
-      border: 'none',
-      // padding: 0,
+        backgroundColor: 'white',
+        borderColor: 'white',
+        borderStyle: 'none',
+        buttonStyle: 'none',
+        boxShadow: '0 0 0 0 white',
+        color: 'white',
+        cursor: 'pointer',
+        padding: '0px',
     },
 }));
 function LoginGoogle() {
@@ -44,10 +47,12 @@ function LoginGoogle() {
             onSuccess={responseSuccessGoogle}
             onFailure={responseFailureGoogle}
             cookiePolicy={'single_host_origin'}
-            icon={<img src={GoogleIcon} alt='Google' />}
+            icon={false}
             buttonText=""
-            cssClass={classes['login-google-icon']}
-            />
+            className={classes['login-google-icon']}
+            >
+              <img src={GoogleIcon} alt='Google' className={classes['login-google-icon']} />
+            </GoogleLogin>
         </div>
     );
 }

@@ -120,3 +120,17 @@
     margin-left: 8vw;
     margin-left: 20vh;
 }
+
+.signup-footer {
+    margin-top: 5vh;
+    margin-bottom: 1vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.signup-footer > div > a {
+    margin: 0.5vw;
+    /* padding: 1vw; */
+}

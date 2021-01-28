@@ -10,8 +10,11 @@ const useStyles = makeStyles((theme) => ({
         alignItems: 'center',
         backgroundColor: 'white',
         borderColor: 'white',
+        border: 'none',
+        buttonStyle: 'none',
         boxShadow: '0 0 0 0 white',
         color: 'white',
+        cursor: 'pointer',
         padding: 0,
     },
 }));
@@ -41,7 +44,7 @@ function LoginwithFacebook() {
                 autoLoad={false}
                 // onClick={componentClicked}
                 callback={responseFacebook}
-                icon={<img className={classes['login-facebook-icon']} src={FacebookIcon} alt='Google' />}
+                icon={<img className={classes['login-facebook-icon']} src={FacebookIcon} alt='Facebook' />}
                 textButton=""
                 cssClass={classes['login-facebook-icon']}
             >
