@@ -9,11 +9,22 @@ import Message from "./Message";
 import "../css/login.css";
 import { useHistory } from "react-router-dom";
 import { AuthContext } from "../Context/AuthContext";
-// import base from '../../image_assets/login-signup/'
+import LoginCardBackground from '../../image_assets/login-signup/LoginCardBackground.svg'
+import BackgroundWithTrees from '../../image_assets/login-signup/LoginBackgroundWithTrees.svg'
+import GirlWithLaptop from '../../image_assets/login-signup/Group 122.svg'
+import FormProfileIcon from '../../image_assets/login-signup/FormProfileIcon.svg'
+import FormPasswordIcon from '../../image_assets/login-signup/FormPasswordIcon.svg'
 import LinkedinLogin from "./LoginwithLinkedin";
 import LoginGoogle from "./Loginwithgoogle";
 import LoginFacebook from "./LoginwithFacebook";
 import LoginwithGithub from "./LoginwithGithub";
+import GoogleIcon from '../../image_assets/login-signup/GoogleIcon.svg'
+import FacebookIcon from '../../image_assets/login-signup/FacebookIcon.svg'
+import LinkedinIcon from '../../image_assets/login-signup/LinkedinIcon.svg'
+import TelegramIcon from '../../image_assets/login-signup/TelegramIcon.svg'
+import YoutubeIcon from '../../image_assets/login-signup/YoutubeIcon.svg'
+import GithubIcon from '../../image_assets/login-signup/GithubIcon.svg'
+import TwitterIcon from '../../image_assets/login-signup/TwitterIcon.svg'
 
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Prompt:wght@100&display=swap');
@@ -40,25 +51,44 @@ const useStyles = makeStyles((theme) => ({
         color: '#05386B',
         fontFamily: 'Prompt',
     },
+    formTextStyle: {
+        fontFamily :'Prompt',
+        fontWeight: 700,
+    },
     submit: {
-        marginTop: '8vh',
-        marginLeft: '3vw',
+        marginLeft: '4vw',
         paddingLeft: '5vw',
         paddingRight: '5vw',
         color: 'white',
         background: "#05386B",
         fontFamily: 'Prompt, sans-serif',
         margin: theme.spacing(3, 0, 2),
-        marginBottom: "30px",
         fontWeight: '700',
     },
     'login-background': {
-        marginTop: '1vh',
+        justifyContent: 'center',
+        alignItems: 'center',
+        display: "flex",
+        marginTop: '8vh',
+        marginLeft: '2vw',
         borderRadius: '15px',
-        backgroundColor: '#05386B',
-        width: '40vw',
+        // backgroundColor: '#05386B',
+        // width: '50vw',
         paddingTop: '1vh',
         paddingBottom: '10vh',
+        paddingLeft: '3vw',
+    },
+    LoginCardBackground: {
+        position: 'relative',
+        zIndex: -1,
+        marginTop: '0vh',
+        marginBottom: '-100vh',
+
+    },
+    'forgot__password' :{
+        marginLeft: '13vw',
+        fontFamily: 'Inter',
+        color: '#05386B'
     }
 }));
 
@@ -114,72 +144,115 @@ export default function Login() {
     };
 
     return (
-        <div className='login-signup-container'>
-        <Container className={classes["login-background"]}>
-            <div className='login-card-green-dot-1' />
-            <Container component="Login" maxWidth="xs">
-                <div className={classes.paper}>
-                    <form className={classes.form} noValidate>
-                        <TextField
-                            variant="outlined"
-                            margin="normal"
-                            required
-                            fullWidth
-                            id="email"
-                            label="Email Address"
-                            name="email"
-                            autoComplete="off"
-                            value={user.email}
-                            onChange={changeHandler}
-                            error={user.email === ""}
-                        />
-                        <TextField
-                            variant="outlined"
-                            margin="normal"
-                            required
-                            fullWidth
-                            name="password"
-                            label="Password"
-                            type="password"
-                            id="password"
-                            autoComplete="off"
-                            value={user.password}
-                            onChange={changeHandler}
-                            error={user.password === ""}
-                        />
-                        <Link
-                            className="forgot__password"
-                            href="#"
-                            variant="body2"
-                        >
-                            Forgot password?
+        <div className='login-items-position'>
+            <img src={GirlWithLaptop} className='girl-with-laptop' />
+            {window.location.pathname === '/login' ? <img src={BackgroundWithTrees} className='background-with-trees' /> : null}
+            <div className='login-container'>
+                <Container className={classes["login-background"]}>
+                    <Container component="Login" maxWidth="xs" Style='margin-right:0vw;margin-left:0vw;padding-right:0vw;'>
+                        <div className={classes.paper}>
+                            <form className={classes.form} noValidate>
+                                <div Style='display:flex;'>
+                                    <img src={FormProfileIcon} alt='profile icon'/>
+                                    <TextField
+                                        variant="outlined"
+                                        margin="normal"
+                                        required
+                                        fullWidth
+                                        id="email"
+                                        label="Email Address"
+                                        className={classes.formTextStyle}
+                                        name="email"
+                                        autoComplete="off"
+                                        value={user.email}
+                                        onChange={changeHandler}
+                                        error={user.email === ""}
+                                    />
+                                </div>
+                                <div Style='display:flex;'>
+                                    <img src={FormPasswordIcon} alt='pswd icon'/>
+                                    <TextField
+                                        variant="outlined"
+                                        margin="normal"
+                                        required
+                                        className={classes.formTextStyle}
+                                        fullWidth
+                                        name="password"
+                                        label="Password"
+                                        type="password"
+                                        id="password"
+                                        autoComplete="off"
+                                        value={user.password}
+                                        onChange={changeHandler}
+                                        error={user.password === ""}
+                                    />
+                                </div>
+                                <Link
+                                    className={classes["forgot__password"]}
+                                    href="#"
+                                    variant="body2"
+                                >
+                                    Forgot password?
+                                </Link>
+                                {message && <Message text={message} />}
+                                <Button
+                                    type="submit"
+                                    variant="contained"
+                                    className={classes.submit}
+                                    onClick={submitHandler}
+                                >
+                                    Sign in
+                                </Button>
+                                <div className='sign-in-using'>
+                                    <span />
+                                    <p>or sign in using</p>
+                                    <span /> 
+                                </div>
+                                <div className='login-linkedin-github-google-facebook'>
+                                    <LinkedinLogin />
+                                    <span />
+                                    <LoginGoogle />
+                                    <span />
+                                    <LoginFacebook />
+                                    <span />
+                                    <LoginwithGithub />
+                                </div>
+                            </form>
+                        </div>
+                    </Container>
+                    <div className='login-signin-button-container'>
+                        <Link href="./login" Style='text-decoration: none;'>
+                            <div className="login-signin-button-text login-button">Login</div>
                         </Link>
-                        {message && <Message text={message} />}
-                        <Button
-                            type="submit"
-                            variant="contained"
-                            className={classes.submit}
-                            onClick={submitHandler}
-                        >
-                            Sign in
-                        </Button>
-                        <LinkedinLogin />
-                        <LoginGoogle />
-                        <LoginFacebook />
-                        <LoginwithGithub />
-                    </form>
+                        <Link href="./signup" Style='text-decoration: none;'>
+                            <div className="login-signin-button-text signin-button">Signup</div>
+                        </Link>
+                    </div>
+                </Container>
+            </div>
+            <div className='login-footer'>
+                <div Style='font-family:Montserrat;font-weight:700;'>Follow us on</div>
+                <div>
+                    {/* <a href=''>
+                        <img src={GoogleIcon} alt='google' />
+                    </a> */}
+                    <a href='https://www.facebook.com/Programmers-Army-105809441239783'>
+                        <img src={FacebookIcon} alt='facebook' />
+                    </a>
+                    {/* <a href=''>
+                        <img src={TelegramIcon} alt='telegram' />
+                    </a> */}
+                    <a href='https://www.youtube.com/channel/UCRJS3O94F8cOj2U0gOUwmBA'>
+                        <img src={YoutubeIcon} alt='youtube' />
+                    </a>
+                    {/* <a href=''>
+                        <img src={LinkedinIcon} alt='Linkedin' />
+                    </a> */}
+                    <a href='https://twitter.com/ProgrammingArmy'>
+                        <img src={TwitterIcon} alt='Twitter' />
+                    </a>
                 </div>
-                <div className='login-card-green-dot-2' />
-                <div className='login-card-green-dot-3' />
-            </Container>
-        </Container>
-        <div className='login-signin-button-container'>
-            <Link href="./login">
-                <div className="login-signin-button-text login-button">Login</div>
-            </Link>
-            <Link href="./signup">
-                <div className="login-signin-button-text signin-button">Signup</div>
-            </Link>
+            <div Style='font-family:Montserrat;font-weight:300;'>Copyright © Programmers Army All rights reserved 2020</div>
         </div>
     </div>
     );
