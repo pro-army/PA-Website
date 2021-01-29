@@ -8,7 +8,7 @@ import "../css/signup.css";
 import { AuthContext } from "../Context/AuthContext";
 import { useHistory } from "react-router-dom";
 import LoginCardBackground from '../../image_assets/login-signup/LoginCardBackground.svg'
-import BackgroundWithTrees from '../../image_assets/login-signup/BackgroundWithTrees.svg'
+import BackgroundWithTrees from '../../image_assets/login-signup/SignupBackgroundWithTrees.svg'
 import GirlWithLaptop from '../../image_assets/login-signup/Group 122.svg'
 import LinkedinLogin from "./LoginwithLinkedin";
 import LoginGoogle from "./Loginwithgoogle";
@@ -21,6 +21,7 @@ import LinkedinIcon from '../../image_assets/login-signup/LinkedinIcon.svg'
 import TelegramIcon from '../../image_assets/login-signup/TelegramIcon.svg'
 import YoutubeIcon from '../../image_assets/login-signup/YoutubeIcon.svg'
 import GithubIcon from '../../image_assets/login-signup/GithubIcon.svg'
+import TwitterIcon from '../../image_assets/login-signup/TwitterIcon.svg'
 
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Prompt:wght@100&display=swap');
@@ -28,13 +29,13 @@ import GithubIcon from '../../image_assets/login-signup/GithubIcon.svg'
 const useStyles = makeStyles((theme) => ({
     paper: {
         marginTop: theme.spacing(8),
-        marginBottom: '5vh',
+        // marginBottom: '5vh',
         display: "flex",
         flexDirection: "column",
         background: "#FFFFFF 0% 0% no-repeat padding-box",
         boxShadow: "0px 30px 36px #557DA526",
         borderRadius: "20px",
-        padding: "20px",
+        padding: "1vw",
     },
     avatar: {
         margin: theme.spacing(1),
@@ -47,25 +48,41 @@ const useStyles = makeStyles((theme) => ({
         fontFamily: 'Prompt',
     },
     submit: {
-        marginTop: '8vh',
-        marginLeft: '7vw',
+        // marginTop: '8vh',
+        marginLeft: '3vw',
         paddingLeft: '5vw',
         paddingRight: '5vw',
         color: 'white',
         background: "#05386B",
         fontFamily: 'Prompt, sans-serif',
         margin: theme.spacing(3, 0, 2),
-        marginBottom: "30px",
         fontWeight: '700',
     },
     'login-background': {
+        justifyContent: 'center',
+        alignItems: 'center',
         display: "flex",
-        marginTop: '1vh',
+        marginTop: '8vh',
+        marginLeft: '2vw',
         borderRadius: '15px',
-        backgroundColor: '#05386B',
-        width: '40vw',
         paddingTop: '1vh',
         paddingBottom: '10vh',
+        paddingLeft: '3vw',
+    },
+    LoginCardBackground: {
+        position: 'relative',
+        zIndex: -1,
+        marginTop: '0vh',
+        marginBottom: '-100vh',
+
+    },
+    'background-with-trees': {
+        width:'90vw',
+        height: '80vh',
+        position: 'absolute',
+        zIndex: '-1',
+        marginLeft: '-8vw',
+        marginTop: '8vh !important',
     }
 }));
 
@@ -130,150 +147,127 @@ export default function Signup() {
     };
 
     return (
-        <div className='signup-items-position'>
-            <img src={GirlWithLaptop} className='girl-with-laptop' />
-            <img src={BackgroundWithTrees} className='background-with-trees' />
-            <div className='signup-container'>
-                <Container className={classes["login-background"]}>
-                    <Container component="Signup" maxWidth="sm">
+        <div className='login-items-position'>
+        <img src={GirlWithLaptop} className='girl-with-laptop' alt='girl with laptop' />
+        {window.location.pathname === '/signup' ? <img src={BackgroundWithTrees} className={classes['background-with-trees']} /> : null}
+        <div className='signup-container'>
+            <Container className={classes["login-background"]}>
+                    <Container component="Login" maxWidth="xs" Style='margin-right:0vw;margin-left:0vw;padding-right:0vw;'>
                         <div className={classes.paper}>
                             <form className={classes.form} noValidate>
-                                <span Style="color:black;">Full Name*</span>
-                                <TextField
+                            <TextField
                                     variant="outlined"
                                     margin="normal"
                                     required
                                     fullWidth
                                     id="name"
-                                    label="Enter your full name"
+                                    label="Name"
                                     name="name"
-                                    value={user.name}
+                                    autoComplete="off"
+                                    // value={user.email}
                                     onChange={changeHandler}
-                                    error={user.name === ""}
+                                    // error={user.email === ""}
                                 />
-                                {!user.name && <Message text="This field is mandatory" />}
-                                <span Style="color:black;">Email Address*</span>
+                                <TextField
+                                    variant="outlined"
+                                    margin="normal"
+                                    required
+                                    fullWidth
+                                    id="username"
+                                    label="Username"
+                                    name="username"
+                                    autoComplete="off"
+                                    // value={user.email}
+                                    onChange={changeHandler}
+                                    // error={user.email === ""}
+                                />
                                 <TextField
                                     variant="outlined"
                                     margin="normal"
                                     required
                                     fullWidth
                                     id="email"
-                                    label="Enter your email"
-                                    value={user.email}
+                                    label="Email Address"
                                     name="email"
                                     autoComplete="off"
+                                    // value={user.email}
                                     onChange={changeHandler}
-                                    error={user.email === ""}
+                                    // error={user.email === ""}
                                 />
-                                {!isEmail(user.email) 
-                                && 
-                                (
-                                    <Message text="Enter a valid email" />
-                                )
-                                }
-                                <div Style="display:flex;">
-                                    <div className="password__field">
-                                        <div Style="color:black;display:flex;">
-                                            Create Password*
-                                        </div>
-                                        <div Style="">
-                                            <TextField
-                                                variant="outlined"
-                                                margin="normal"
-                                                required="true"
-                                                name="password"
-                                                label="enter your password"
-                                                type="password"
-                                                id="password"
-                                                onChange={changeHandler}
-                                                value={user.password}
-                                                error={user.password === ""}
-                                            />
-                                        </div>
-                                    </div>
-                                    <div
-                                        className="password__field"
-                                        Style="padding-left:2vw;"
-                                    >
-                                        <div Style="color:black;display:flex;">
-                                            Confirm Password*
-                                        </div>
-                                        <TextField
-                                            variant="outlined"
-                                            margin="normal"
-                                            required
-                                            name="confirmPassword"
-                                            label="confirm your password"
-                                            type="password"
-                                            id="confirmPassword"
-                                            value={user.confirmPassword}
-                                            onChange={changeHandler}
-                                            error={user.confirmPassword === ""}
-                                        />
-                                        {
-                                        user.password !== user.confirmPassword && (
-                                            <Message text="Password Doesn't Match" />
-                                        )
-                                        }
-                                    </div>
-                                </div>
-                                
-                                {message.length ? (
-                                    <Message text={"Fill in correct Details"} />
-                                ) : null}
+                                <TextField
+                                    variant="outlined"
+                                    margin="normal"
+                                    required
+                                    fullWidth
+                                    name="password"
+                                    label="Password"
+                                    type="password"
+                                    id="password"
+                                    autoComplete="off"
+                                    value={user.password}
+                                    onChange={changeHandler}
+                                    error={user.password === ""}
+                                />
+                                {message && <Message text={message} />}
                                 <Button
                                     type="submit"
                                     variant="contained"
-                                    color="primary"
                                     className={classes.submit}
                                     onClick={submitHandler}
                                 >
-                                    Signup
+                                    Sign up
                                 </Button>
+                                <div className='sign-in-using'>
+                                    <span />
+                                    <p>or sign up using</p>
+                                    <span /> 
+                                </div>
                                 <div className='login-linkedin-github-google-facebook'>
-                                        <LinkedinLogin />
-                                        <LoginGoogle />
-                                        <LoginFacebook />
-                                        <LoginwithGithub />
+                                    <LinkedinLogin />
+                                    <span />
+                                    <LoginGoogle />
+                                    <span />
+                                    <LoginFacebook />
+                                    <span />
+                                    <LoginwithGithub />
                                 </div>
                             </form>
                         </div>
                     </Container>
                     <div className='login-signin-button-container'>
-                        <Link href="./login">
-                            <div className="login-signin-button-text login-button" Style='text-decoration: none;'>Login</div>
+                        <Link href="./login" Style='text-decoration: none;'>
+                            <div className="login-signin-button-text login-button">Login</div>
                         </Link>
-                        <Link href="./signup">
-                            <div className="login-signin-button-text signin-button" Style='text-decoration: none;'>Signup</div>
+                        <Link href="./signup" Style='text-decoration: none;'>
+                            <div className="login-signin-button-text signin-button">Signup</div>
                         </Link>
                     </div>
-                </Container>
-            </div>
-            <div className='signup-footer'>
-            <div Style='font-family:Montserrat;font-weight:700;'>Follow us on</div>
-            <div>
-                {/* <a href=''>
-                    <img src={GoogleIcon} alt='google' />
-                </a> */}
-                <a href='https://www.facebook.com/Programmers-Army-105809441239783'>
-                    <img src={FacebookIcon} alt='facebook' />
-                </a>
-                {/* <a href=''>
-                    <img src={TelegramIcon} alt='telegram' />
-                </a> */}
-                <a href='https://www.youtube.com/channel/UCRJS3O94F8cOj2U0gOUwmBA'>
-                    <img src={YoutubeIcon} alt='youtube' />
-                </a>
-                {/* <a href=''>
-                    <img src={LinkedinIcon} alt='Linkedin' />
-                </a> */}
-                <a href='https://twitter.com/ProgrammingArmy'>
-                    <img src={TwitterIcon} alt='Twitter' />
-                </a>
-            </div>
-            <div Style='font-family:Montserrat;font-weight:300;'>Copyright © Programmers Army All rights reserved 2020</div>
+            </Container>
+    </div>
+    <div className='login-footer'>
+        <div Style='font-family:Montserrat;font-weight:700;'>Follow us on</div>
+        <div>
+            {/* <a href=''>
+                <img src={GoogleIcon} alt='google' />
+            </a> */}
+            <a href='https://www.facebook.com/Programmers-Army-105809441239783'>
+                <img src={FacebookIcon} alt='facebook' />
+            </a>
+            {/* <a href=''>
+                <img src={TelegramIcon} alt='telegram' />
+            </a> */}
+            <a href='https://www.youtube.com/channel/UCRJS3O94F8cOj2U0gOUwmBA'>
+                <img src={YoutubeIcon} alt='youtube' />
+            </a>
+            {/* <a href=''>
+                <img src={LinkedinIcon} alt='Linkedin' />
+            </a> */}
+            <a href='https://twitter.com/ProgrammingArmy'>
+                <img src={TwitterIcon} alt='Twitter' />
+            </a>
         </div>
-        </div>
+        <div Style='font-family:Montserrat;font-weight:300;'>Copyright © Programmers Army All rights reserved 2020</div>
+    </div>
+</div>
     );
 }

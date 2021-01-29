@@ -1,39 +1,37 @@
-.login__card {
+.signup__card {
     display: flex;
 }
 .signup-container {
     z-index: 1;
     position: relative;
     display:flex;
-    width: 34vw;
-    height: 60vh;
-    margin-left: 30vw;
+    width: 33.5vw;
+    height: 84vh;
+    margin-left: 33vw;
     margin-top: 20vh;
-    background: url('../../image_assets/login-signup/LoginCardBackground.svg');
+    background: url('../../image_assets/login-signup/SignupCardBackground.svg');
 }
+
 
 .create__newaccount {
     display: flex;
 }
 
-.forgot__password {
-    padding-left: 230px;
+.login-signin-button-text {
+    color:black;
+    transform: rotate(90deg);
+    transition: font-weight 1.5s;
 }
 
-.loginto__previousaccount {
-    display: flex;
-    font-size: 15px;
-    cursor:pointer;
-    margin-left: 10vw;
+.login-signin-button-text:hover {
+    font-weight: bold;
 }
 
-.password__field {
-    display: flex;
-    flex-direction: column;
-    height: 13vh;
+.app {
+    height: 100vh;
 }
 
-.signin-card-green-dot-1 {
+.signup-card-green-dot-1 {
     z-index: 2;
     margin-top: 1vh;
     margin-right: -7.8vw;
@@ -45,7 +43,7 @@
     -webkit-border-radius: 13px 0 150px 0;
 }
 
-.signin-card-green-dot-2 {
+.signup-card-green-dot-2 {
     width: 100px;
     height: 50px;
     background: #62F2AD;
@@ -55,7 +53,7 @@
     
 }
 
-.signin-card-green-dot-3 {
+.signup-card-green-dot-3 {
     margin-left: 26.15vw;
     margin-top: -25vh;
     width: 3vw;
@@ -66,33 +64,48 @@
     -webkit-border-radius: 100px 0 0 100px;
 }
 
-
 .login-signin-button-container {
-    /* position: relative; */
-    /* left: 0vw; */
+    position: relative;
+    /* left: 0; */
+    /* padding:0; */
+    margin-bottom: 5vh;
     /* justify-content: space-between; */
     display:flex;
     flex-direction: column;
-    /* margin-left: -5vw; */
+    margin-left: -1.6vw;
+    /* margin-right: vw; */
 }
 
 .login-button {
-    border-radius: 5px 5px 0px 0px;
     text-align: center;
     justify-content: center;
-    background-color: white;
-    cursor: pointer;
+    background-color: #F2F2F2;
+    /* cursor: pointer; */
     padding: 2vh;
     margin-bottom: 3.1vw;
+    text-decoration: none;
+    border-radius: 5px 5px 0px 0px;
+    transition: all 1.5s;
+}
+
+.login-button:hover {
+    background-color: #62F2AD;
 }
 
 .signin-button {
+    background-color: white;
     text-align: center;
     justify-content: center;
     border-radius: 5px 5px 0px 0px;
     cursor: pointer;
     padding: 2vh;
     width: 4vw;
+    text-decoration: none;
+    transition: all 1.5s;
+}
+
+.signin-button:hover {
+    background-color: #62F2AD;
 }
 
 .girl-with-laptop {
@@ -100,25 +113,20 @@
     height: 30vh;
     position: absolute;
     z-index: 2;
-    margin-left: 50vw;
+    margin-left: 61vw;
     margin-top: -19vh;
 }
 
-.background-with-trees {
-    width:90vw;
-    height: 80vh;
-    position: absolute;
-    z-index: -1;
-    margin-left: -8vw;
-    margin-top: -16vh;
-}
-.login-linkedin-github-google-facebook {
+.signup-linkedin-github-google-facebook {
     display: flex;
+    justify-content: space-between;
+    align-items: center;
 }
-
+ 
 .signup-items-position {
-    margin-left: 8vw;
-    margin-left: 20vh;
+    margin-left: 5vw;
+    justify-content: center;
+    align-items: center;
 }
 
 .signup-footer {
@@ -132,5 +140,28 @@
 
 .signup-footer > div > a {
     margin: 0.5vw;
-    /* padding: 1vw; */
+}
+
+.signup-linkedin-github-google-facebook > div > button {
+    box-shadow: 0px 0px 0px 0px white !important;
+}
+
+.signup-linkedin-github-google-facebook > span {
+    background-color: black;
+    height: 6vh;
+    width: 0.01vw;
+}
+
+.sign-up-using {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    font-family: 'Montserrat';
+    font-weight: 700;
+}
+
+.sign-up-using > span{
+    height: 0.01vw;
+    background-color: black;
+    width: 4vw; 
 }

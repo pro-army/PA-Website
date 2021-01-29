@@ -10,8 +10,10 @@ import "../css/login.css";
 import { useHistory } from "react-router-dom";
 import { AuthContext } from "../Context/AuthContext";
 import LoginCardBackground from '../../image_assets/login-signup/LoginCardBackground.svg'
-import BackgroundWithTrees from '../../image_assets/login-signup/BackgroundWithTrees.svg'
+import BackgroundWithTrees from '../../image_assets/login-signup/LoginBackgroundWithTrees.svg'
 import GirlWithLaptop from '../../image_assets/login-signup/Group 122.svg'
+import FormProfileIcon from '../../image_assets/login-signup/FormProfileIcon.svg'
+import FormPasswordIcon from '../../image_assets/login-signup/FormPasswordIcon.svg'
 import LinkedinLogin from "./LoginwithLinkedin";
 import LoginGoogle from "./Loginwithgoogle";
 import LoginFacebook from "./LoginwithFacebook";
@@ -49,20 +51,21 @@ const useStyles = makeStyles((theme) => ({
         color: '#05386B',
         fontFamily: 'Prompt',
     },
+    formTextStyle: {
+        fontFamily :'Prompt',
+        fontWeight: 700,
+    },
     submit: {
-        marginTop: '8vh',
-        marginLeft: '3vw',
+        marginLeft: '4vw',
         paddingLeft: '5vw',
         paddingRight: '5vw',
         color: 'white',
         background: "#05386B",
         fontFamily: 'Prompt, sans-serif',
         margin: theme.spacing(3, 0, 2),
-        marginBottom: "30px",
         fontWeight: '700',
     },
     'login-background': {
-        // background: `url(${LoginCardBackground})`,
         justifyContent: 'center',
         alignItems: 'center',
         display: "flex",
@@ -81,6 +84,11 @@ const useStyles = makeStyles((theme) => ({
         marginTop: '0vh',
         marginBottom: '-100vh',
 
+    },
+    'forgot__password' :{
+        marginLeft: '13vw',
+        fontFamily: 'Inter',
+        color: '#05386B'
     }
 }));
 
@@ -138,12 +146,14 @@ export default function Login() {
     return (
         <div className='login-items-position'>
             <img src={GirlWithLaptop} className='girl-with-laptop' />
-            <img src={BackgroundWithTrees} className='background-with-trees' />
+            {window.location.pathname === '/login' ? <img src={BackgroundWithTrees} className='background-with-trees' /> : null}
             <div className='login-container'>
                 <Container className={classes["login-background"]}>
-                        <Container component="Login" maxWidth="xs" Style='margin-right:0vw;margin-left:0vw;padding-right:0vw;'>
-                            <div className={classes.paper}>
-                                <form className={classes.form} noValidate>
+                    <Container component="Login" maxWidth="xs" Style='margin-right:0vw;margin-left:0vw;padding-right:0vw;'>
+                        <div className={classes.paper}>
+                            <form className={classes.form} noValidate>
+                                <div Style='display:flex;'>
+                                    <img src={FormProfileIcon} alt='profile icon'/>
                                     <TextField
                                         variant="outlined"
                                         margin="normal"
@@ -151,16 +161,21 @@ export default function Login() {
                                         fullWidth
                                         id="email"
                                         label="Email Address"
+                                        className={classes.formTextStyle}
                                         name="email"
                                         autoComplete="off"
                                         value={user.email}
                                         onChange={changeHandler}
                                         error={user.email === ""}
                                     />
+                                </div>
+                                <div Style='display:flex;'>
+                                    <img src={FormPasswordIcon} alt='pswd icon'/>
                                     <TextField
                                         variant="outlined"
                                         margin="normal"
                                         required
+                                        className={classes.formTextStyle}
                                         fullWidth
                                         name="password"
                                         label="Password"
@@ -171,64 +186,72 @@ export default function Login() {
                                         onChange={changeHandler}
                                         error={user.password === ""}
                                     />
-                                    
-                                    <Link
-                                        className="forgot__password"
-                                        href="#"
-                                        variant="body2"
-                                    >
-                                        Forgot password?
-                                    </Link>
-                                    {message && <Message text={message} />}
-                                    <Button
-                                        type="submit"
-                                        variant="contained"
-                                        className={classes.submit}
-                                        onClick={submitHandler}
-                                    >
-                                        Sign in
-                                    </Button>
-                                    <div className='login-linkedin-github-google-facebook'>
-                                        <LinkedinLogin />
-                                        <LoginGoogle />
-                                        <LoginFacebook />
-                                        <LoginwithGithub />
-                                    </div>
-                                </form>
-                            </div>
-                        </Container>
-                        <div className='login-signin-button-container'>
-                            <Link href="./login">
-                                <div className="login-signin-button-text login-button" Style='text-decoration: none;'>Login</div>
-                            </Link>
-                            <Link href="./signup">
-                                <div className="login-signin-button-text signin-button" Style='text-decoration: none;'>Signup</div>
-                            </Link>
+                                </div>
+                                <Link
+                                    className={classes["forgot__password"]}
+                                    href="#"
+                                    variant="body2"
+                                >
+                                    Forgot password?
+                                </Link>
+                                {message && <Message text={message} />}
+                                <Button
+                                    type="submit"
+                                    variant="contained"
+                                    className={classes.submit}
+                                    onClick={submitHandler}
+                                >
+                                    Sign in
+                                </Button>
+                                <div className='sign-in-using'>
+                                    <span />
+                                    <p>or sign in using</p>
+                                    <span /> 
+                                </div>
+                                <div className='login-linkedin-github-google-facebook'>
+                                    <LinkedinLogin />
+                                    <span />
+                                    <LoginGoogle />
+                                    <span />
+                                    <LoginFacebook />
+                                    <span />
+                                    <LoginwithGithub />
+                                </div>
+                            </form>
                         </div>
+                    </Container>
+                    <div className='login-signin-button-container'>
+                        <Link href="./login" Style='text-decoration: none;'>
+                            <div className="login-signin-button-text login-button">Login</div>
+                        </Link>
+                        <Link href="./signup" Style='text-decoration: none;'>
+                            <div className="login-signin-button-text signin-button">Signup</div>
+                        </Link>
+                    </div>
                 </Container>
-        </div>
-        <div className='login-footer'>
-            <div Style='font-family:Montserrat;font-weight:700;'>Follow us on</div>
-            <div>
-                {/* <a href=''>
-                    <img src={GoogleIcon} alt='google' />
-                </a> */}
-                <a href='https://www.facebook.com/Programmers-Army-105809441239783'>
-                    <img src={FacebookIcon} alt='facebook' />
-                </a>
-                {/* <a href=''>
-                    <img src={TelegramIcon} alt='telegram' />
-                </a> */}
-                <a href='https://www.youtube.com/channel/UCRJS3O94F8cOj2U0gOUwmBA'>
-                    <img src={YoutubeIcon} alt='youtube' />
-                </a>
-                {/* <a href=''>
-                    <img src={LinkedinIcon} alt='Linkedin' />
-                </a> */}
-                <a href='https://twitter.com/ProgrammingArmy'>
-                    <img src={TwitterIcon} alt='Twitter' />
-                </a>
             </div>
+            <div className='login-footer'>
+                <div Style='font-family:Montserrat;font-weight:700;'>Follow us on</div>
+                <div>
+                    {/* <a href=''>
+                        <img src={GoogleIcon} alt='google' />
+                    </a> */}
+                    <a href='https://www.facebook.com/Programmers-Army-105809441239783'>
+                        <img src={FacebookIcon} alt='facebook' />
+                    </a>
+                    {/* <a href=''>
+                        <img src={TelegramIcon} alt='telegram' />
+                    </a> */}
+                    <a href='https://www.youtube.com/channel/UCRJS3O94F8cOj2U0gOUwmBA'>
+                        <img src={YoutubeIcon} alt='youtube' />
+                    </a>
+                    {/* <a href=''>
+                        <img src={LinkedinIcon} alt='Linkedin' />
+                    </a> */}
+                    <a href='https://twitter.com/ProgrammingArmy'>
+                        <img src={TwitterIcon} alt='Twitter' />
+                    </a>
+                </div>
             <div Style='font-family:Montserrat;font-weight:300;'>Copyright © Programmers Army All rights reserved 2020</div>
         </div>
     </div>

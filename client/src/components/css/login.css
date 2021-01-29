@@ -1,3 +1,6 @@
+.login__card {
+    display: flex;
+}
 .login-container {
     z-index: 1;
     position: relative;
@@ -9,10 +12,6 @@
     background: url('../../image_assets/login-signup/LoginCardBackground.svg');
 }
 
-.login__card {
-    display: flex;
-}
-
 .create__newaccount {
     display: flex;
 }
@@ -20,6 +19,10 @@
 .login-signin-button-text {
     color:black;
     transform: rotate(90deg);
+    transition: font-weight 1.5s;
+}
+.login-signin-button-text:hover {
+    font-weight: bold;
 }
 
 .app {
@@ -66,8 +69,8 @@
     margin-bottom: 5vh;
     /* justify-content: space-between; */
     display:flex;
-    /* flex-direction: column; */
-    margin-left: -1.6vw;
+    flex-direction: column;
+    /* margin-left: -1.6vw; */
     /* margin-right: vw; */
 }
 
@@ -79,6 +82,12 @@
     padding: 2vh;
     margin-bottom: 3.1vw;
     border-radius: 5px 5px 0px 0px;
+    text-decoration: none;
+    transition: all 1.5s;
+}
+.login-button:hover {
+    background-color: #62F2AD;
+    text-decoration: none;
 }
 
 .signin-button {
@@ -88,7 +97,12 @@
     border-radius: 5px 5px 0px 0px;
     cursor: pointer;
     padding: 2vh;
+    text-decoration: none;
     width: 4vw;
+}
+.signin-button:hover {
+    background-color: #62F2AD;
+    text-decoration: none;
 }
 
 .girl-with-laptop {
@@ -106,7 +120,7 @@
     position: absolute;
     z-index: -1;
     margin-left: -8vw;
-    margin-top: -16vh;
+    margin-top: -16vh !important;
 }
 .login-linkedin-github-google-facebook {
     display: flex;
@@ -133,4 +147,28 @@
 .login-footer > div > a {
     margin: 0.5vw;
     /* padding: 1vw; */
+}
+
+.login-linkedin-github-google-facebook > div > button {
+    box-shadow: 0px 0px 0px 0px white !important;
+}
+
+.login-linkedin-github-google-facebook > span {
+    background-color: black;
+    height: 6vh;
+    width: 0.01vw;
+}
+
+.sign-in-using {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    font-family: 'Montserrat';
+    font-weight: 700;
+}
+
+.sign-in-using > span{
+    height: 0.01vw;
+    background-color: black;
+    width: 4vw; 
 }

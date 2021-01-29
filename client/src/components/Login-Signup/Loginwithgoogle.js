@@ -13,7 +13,7 @@ const useStyles = makeStyles((theme) => ({
         borderColor: 'white',
         borderStyle: 'none',
         buttonStyle: 'none',
-        boxShadow: '0 0 0 0 white',
+        boxShadow: '0px 0px 0px 0px white',
         color: 'white',
         cursor: 'pointer',
         padding: '0px',
@@ -41,7 +41,7 @@ function LoginGoogle() {
       }
     
     return (
-        <div>
+        <div className={classes['login-google-icon']} Style=''>
             <GoogleLogin
             clientId="603299777654-ejrbu45mkh8a4n5q0tvlko2c0mj395vi.apps.googleusercontent.com"
             onSuccess={responseSuccessGoogle}
