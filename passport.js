@@ -7,7 +7,7 @@ const User = require("./models/User");
 
 var opts = {};
 opts.jwtFromRequest = ExtractJwt.fromAuthHeaderAsBearerToken();
-opts.secretOrKey = "ndsfnsdfsdsfndskjfndsjf43r843fjdksfb";
+opts.secretOrKey = process.env.SECRETORKEY;
 opts.issuer = "Programmers_Army";
 
 passport.use(
