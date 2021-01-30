@@ -17,8 +17,14 @@ articleRouter.post(
 articleRouter.post(
     "/create",
     passport.authenticate("jwt", { session: false }), //middleware to check the authorization status of user
-    auth.isAdmin,
     Article.createArticle
+);
+
+articleRouter.post(
+    "/verify",
+    passport.authenticate("jwt", { session: false }), //middleware to check the authorization status of user
+    auth.isAdmin,
+    Article.verifyArticle
 );
 
 articleRouter.get("/all", Article.getAllArticles);
