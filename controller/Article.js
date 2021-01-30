@@ -200,9 +200,14 @@ exports.getArticleById = (req, res) => {
 exports.getDomainArticlesByFilter = (req, res) => {
     console.log(req.query);
     const { _id } = req.query;
-
+    // { path: "articles._id" }
     Domain.findById(_id)
-        .populate({ path: "articles._id" })
+        .populate({
+            path: "articles._id",
+            select: "title small_description ratings",
+            //   , match: { color: 'black' }
+            // options: { sort: { numberOfViews: -1 } },
+        })
         .exec((err, docs) => {
             if (err) {
                 res.status(500).json({
