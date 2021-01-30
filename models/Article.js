@@ -24,6 +24,10 @@ const AtricleSchema = new mongoose.Schema(
             default:
                 "https://images.unsplash.com/photo-1583508915901-b5f84c1dcde1?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80",
         },
+        difficulty: {
+            type: String,
+            default: "easy",
+        },
         ratings: {
             overall_rating_points: {
                 type: Number,
@@ -79,6 +83,15 @@ const AtricleSchema = new mongoose.Schema(
                 ref: "User",
             },
             authorName: {
+                type: String,
+            },
+        },
+        verifier: {
+            _id: {
+                type: mongoose.Schema.Types.ObjectId,
+                ref: "User",
+            },
+            verifierName: {
                 type: String,
             },
         },

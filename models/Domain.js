@@ -15,13 +15,8 @@ const DomainSchema = new mongoose.Schema(
         },
         articles: [
             {
-                _id: {
-                    type: mongoose.Schema.Types.ObjectId,
-                    ref: "Article",
-                },
-                title: {
-                    type: String,
-                },
+                type: mongoose.Schema.Types.ObjectId,
+                ref: "Article",
             },
         ],
     },
