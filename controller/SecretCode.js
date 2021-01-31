@@ -116,8 +116,8 @@ exports.forgotpassword = async (req, res) => {
         });
 
         await secretCode.save();
-        let link = `${process.env.BASEURL}:${
-            process.env.PORT || 4000
+        let link = `${process.env.BASEURL}${
+            process.env.PORT ? "" : ":4000"
         }/api/verify/${user._id}&${code}&${key}`;
 
         try {
