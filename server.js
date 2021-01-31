@@ -18,6 +18,7 @@ const app = express();
 app.use(cors());
 app.use(cookieParser());
 app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: false }));
 
 // Get the environment variables here
 const PORT = process.env.PORT || 4000;
@@ -39,7 +40,7 @@ connection.once("open", function () {
 
 // Adding Ejs Render Mehthod for email tempalte
 app.set("view engine", "ejs");
-app.set("views", path.join(__dirname, "Backend/views"));
+app.set("views", path.join(__dirname, "views"));
 
 // *******************************************
 // These are the routes of our api endpoint

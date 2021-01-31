@@ -55,6 +55,12 @@ const UserSchema = new mongoose.Schema(
             type: Number,
             default: 0,
         },
+        badges: [
+            {
+                type: String,
+                required: true,
+            },
+        ],
         articles: [
             {
                 type: mongoose.Schema.Types.ObjectId,
