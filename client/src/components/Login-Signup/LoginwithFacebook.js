@@ -1,8 +1,26 @@
 import React from "react";
 import FacebookLogin from "react-facebook-login";
 import axios from "axios";
+import FacebookIcon from '../../image_assets/login-signup/FacebookIcon.svg'
+import { makeStyles } from "@material-ui/core/styles";
+
+const useStyles = makeStyles((theme) => ({
+    'login-facebook-icon': {
+        justifyContent: 'center',
+        alignItems: 'center',
+        backgroundColor: 'white',
+        borderColor: 'white',
+        border: 'none',
+        buttonStyle: 'none',
+        boxShadow: '0 0 0 0 white',
+        color: 'white',
+        cursor: 'pointer',
+        padding: 0,
+    },
+}));
 
 function LoginwithFacebook() {
+    const classes = useStyles();
     const responseFacebook = (response) => {
         console.log(response);
         axios({
@@ -26,7 +44,11 @@ function LoginwithFacebook() {
                 autoLoad={false}
                 // onClick={componentClicked}
                 callback={responseFacebook}
-            />
+                icon={<img className={classes['login-facebook-icon']} src={FacebookIcon} alt='Facebook' />}
+                textButton=""
+                cssClass={classes['login-facebook-icon']}
+            >
+            </FacebookLogin>
         </div>
     );
 }

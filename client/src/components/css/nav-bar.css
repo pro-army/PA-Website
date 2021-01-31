@@ -1,0 +1,45 @@
+.nav-bar {
+    /* justify-content: right; */
+    align-items: center;
+    display: flex;
+    box-shadow: 0 0 8px -4px rgba(0,0,0,.5);
+    border-radius: 0px 0px 28% 28%;
+    padding-bottom: 1vh;
+}
+
+.nav-bar-fields {
+    display: flex;
+    /* justify-content: center; */
+    /* align-items: center; */
+    /* text-align: center; */
+    margin-left: 1vw;
+    color: #05386B;
+    font-family: 'Montserrat';
+    font-size: 2vw;
+    font-weight: 700;
+    /* margin: 1vw; */
+    transition: all 1.5s;
+}
+
+.nav-bar-ProgrammersArmyLogo {
+    display: flex;
+    flex-direction: column;
+    margin-top: 0.8vh;
+    margin-left: 3vw;
+    /* margin-right: 35vw; */
+}
+
+.nav-bar-dropdown {
+    display: flex;
+    border: 0;
+    background-color: white;
+    height: 5vh;
+    transition: all 1.5s;
+}
+
+.nav-bar-profile {
+    display: flex;
+    padding-left: 2vw;
+    padding-right: 0.5vw;   
+}
+
