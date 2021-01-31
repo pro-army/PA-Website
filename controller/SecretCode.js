@@ -30,8 +30,8 @@ exports.codegen = async (email) => {
 
         await secretCode.save();
 
-        let link = `${process.env.BASEURL}:${
-            process.env.PORT || 4000
+        let link = `${process.env.BASEURL}${
+            process.env.PORT ? "" : ":4000"
         }/api/verify/${user._id}&${code}`;
 
         await Email.sendLink(email, link);
