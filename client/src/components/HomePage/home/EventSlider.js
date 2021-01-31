@@ -8,7 +8,7 @@ import Slider from "react-slick";
 
 export default function EventSlider(props) {
   // const numOfSlides = props.numOfSlides;
-  const numOfSlides = 7;
+  // const numOfSlides = 7;
   const [slidesToShow, changeSlidesToShow] = useState(4.3);
   const [stopAt, changeStopAt] = useState("2.7");
 
@@ -65,7 +65,7 @@ export default function EventSlider(props) {
 
   return (
     <div className = "event-slider">
-      <button className="event-prev-button" disabled = {slideNum == 0} onClick={() => previous()}>
+      <button className="event-prev-button" disabled = {slideNum === 0} onClick={() => previous()}>
         <i class="fas fa-chevron-left"></i>
       </button>
       <div className="eventApp">
@@ -165,7 +165,7 @@ export default function EventSlider(props) {
         </Slider>
         <br/>
       </div>
-      <button className="event-next-button" disabled = {slideNum == stopAt} onClick={() => next()}>
+      <button className="event-next-button" disabled = {slideNum === stopAt} onClick={() => next()}>
         <i class="fas fa-chevron-right"></i>
       </button>
     </div>

@@ -8,6 +8,7 @@ import Signup from './components/Login-Signup/Signup'
 import HomeMain from './components/HomePage/home/HomeMain'
 import React, { useState, useContext } from "react";
 import { AuthContext } from "./components/Context/AuthContext";
+import Footer from './components/Footer/Footer'
 
 export default function App() {
   const [data, setData] = useState([]);
@@ -34,6 +35,7 @@ export default function App() {
           <Route exact path="/" component={HomeMain} />
         </Switch>
       </div>
+      <Footer />
     </Router>
   );
 }

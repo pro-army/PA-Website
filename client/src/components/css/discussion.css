@@ -34,6 +34,7 @@
 .discussion-icons {
     display: flex;
     flex-direction: row;
+    align-items: center;
     width: 13vw;
     margin-top: 1vh;
     justify-content: space-between;
@@ -42,11 +43,16 @@
 .discussion-post-container {
     display:flex;
     flex-direction: column;
-    box-shadow: 0 0 8px -4px rgba(0,0,0,.5);
+    box-shadow: 0 0 8px -4px rgba(0,0,0,.5);    
 }
 
 .button-clear-post-style-container {
-    justify-content: right;
+    display: flex;
+    justify-content: space-between;
+    width: 7.5vw;
+    padding-right: 1vw;
+    margin-left: 73.5vw;
+    margin-bottom: 2vh;
 }
 
 .discussion-post-textarea {

@@ -2,14 +2,12 @@ import React, { useState, useContext } from "react";
 import Button from "@material-ui/core/Button";
 import TextField from "@material-ui/core/TextField";
 import Link from "@material-ui/core/Link";
-import Typography from "@material-ui/core/Typography";
 import { makeStyles } from "@material-ui/core/styles";
 import Container from "@material-ui/core/Container";
 import Message from "./Message";
 import "../css/login.css";
-import { useHistory } from "react-router-dom";
+// import { useHistory } from "react-router-dom";
 import { AuthContext } from "../Context/AuthContext";
-import LoginCardBackground from '../../image_assets/login-signup/LoginCardBackground.svg'
 import BackgroundWithTrees from '../../image_assets/login-signup/LoginBackgroundWithTrees.svg'
 import GirlWithLaptop from '../../image_assets/login-signup/Group 122.svg'
 import FormProfileIcon from '../../image_assets/login-signup/FormProfileIcon.svg'
@@ -18,13 +16,6 @@ import LinkedinLogin from "./LoginwithLinkedin";
 import LoginGoogle from "./Loginwithgoogle";
 import LoginFacebook from "./LoginwithFacebook";
 import LoginwithGithub from "./LoginwithGithub";
-import GoogleIcon from '../../image_assets/login-signup/GoogleIcon.svg'
-import FacebookIcon from '../../image_assets/login-signup/FacebookIcon.svg'
-import LinkedinIcon from '../../image_assets/login-signup/LinkedinIcon.svg'
-import TelegramIcon from '../../image_assets/login-signup/TelegramIcon.svg'
-import YoutubeIcon from '../../image_assets/login-signup/YoutubeIcon.svg'
-import GithubIcon from '../../image_assets/login-signup/GithubIcon.svg'
-import TwitterIcon from '../../image_assets/login-signup/TwitterIcon.svg'
 
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Prompt:wght@100&display=swap');
@@ -72,8 +63,6 @@ const useStyles = makeStyles((theme) => ({
         marginTop: '8vh',
         marginLeft: '2vw',
         borderRadius: '15px',
-        // backgroundColor: '#05386B',
-        // width: '50vw',
         paddingTop: '1vh',
         paddingBottom: '10vh',
         paddingLeft: '3vw',
@@ -97,7 +86,7 @@ export default function Login() {
     const [user, setUser] = useState({ email: "", password: "" });
     const [message, setMessage] = useState("");
 
-    const history = useHistory();
+    // const history = useHistory();
     const changeHandler = (e) => {
         setUser({ ...user, [e.target.name]: e.target.value });
     };
@@ -110,7 +99,7 @@ export default function Login() {
     const submitHandler = (e) => {
         e.preventDefault();
         clearData();
-        fetch("https://jobs-api.squareboat.info/api/v1/auth/login", {
+        fetch("https://programmers-army-dev-backend.herokuapp.com/api/user/login", {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
@@ -119,23 +108,22 @@ export default function Login() {
         })
             .then((response) => response.json())
             .then((data) => {
-                // console.log("Success:", data);
-                if (data.code === 200) {
+                console.log("Success:", data);
+                if (!data.error) {
                     // console.log(authContext);
                     localStorage.setItem("isAuthenticated", true);
                     localStorage.setItem("token", data.data.token);
                     localStorage.setItem("userRole", data.data.userRole);
-                    localStorage.setItem("userName", data.data.name); 
+                    localStorage.setItem("userName", data.data.name);
+                    fetch(`https://programmers-army-dev-backend.herokuapp.com/api/user/${user.email}`)
+                    .then((response) => response.json())
+                    .then((data) => {
+                        console.log(data);
+                    })
                     authContext.setUser(data.data);
                     authContext.setIsAuthenticated(true);
-
-                    if (data.data.userRole === 0) {
-                        history.push("#");
-                    } else {
-                        history.push("#");
-                    }
                 } else {
-                    setMessage(data.message);
+                    setMessage(data.errorBody);
                 }
             })
             .catch((error) => {
@@ -145,8 +133,8 @@ export default function Login() {
 
     return (
         <div className='login-items-position'>
-            <img src={GirlWithLaptop} className='girl-with-laptop' />
-            {window.location.pathname === '/login' ? <img src={BackgroundWithTrees} className='background-with-trees' /> : null}
+            <img src={GirlWithLaptop} className='girl-with-laptop' alt='Girl with laptop' />
+            <img src={BackgroundWithTrees} className='background-with-trees'  alt='background with trees' />
             <div className='login-container'>
                 <Container className={classes["login-background"]}>
                     <Container component="Login" maxWidth="xs" Style='margin-right:0vw;margin-left:0vw;padding-right:0vw;'>
@@ -230,30 +218,6 @@ export default function Login() {
                     </div>
                 </Container>
             </div>
-            <div className='login-footer'>
-                <div Style='font-family:Montserrat;font-weight:700;'>Follow us on</div>
-                <div>
-                    {/* <a href=''>
-                        <img src={GoogleIcon} alt='google' />
-                    </a> */}
-                    <a href='https://www.facebook.com/Programmers-Army-105809441239783'>
-                        <img src={FacebookIcon} alt='facebook' />
-                    </a>
-                    {/* <a href=''>
-                        <img src={TelegramIcon} alt='telegram' />
-                    </a> */}
-                    <a href='https://www.youtube.com/channel/UCRJS3O94F8cOj2U0gOUwmBA'>
-                        <img src={YoutubeIcon} alt='youtube' />
-                    </a>
-                    {/* <a href=''>
-                        <img src={LinkedinIcon} alt='Linkedin' />
-                    </a> */}
-                    <a href='https://twitter.com/ProgrammingArmy'>
-                        <img src={TwitterIcon} alt='Twitter' />
-                    </a>
-                </div>
-            <div Style='font-family:Montserrat;font-weight:300;'>Copyright © Programmers Army All rights reserved 2020</div>
-        </div>
     </div>
     );
 }

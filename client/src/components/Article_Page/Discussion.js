@@ -1,14 +1,11 @@
 import React from 'react'
 import '../css/discussion.css'
 import '../css/article_page.css'
-import { makeStyles, ThemeProvider } from '@material-ui/core/styles';
-import Avatar from '@material-ui/core/Avatar';
-import AccountCircleIcon from '@material-ui/icons/AccountCircle';
+import { makeStyles} from '@material-ui/core/styles';
 import discussion_alt_profile_picture from '../../image_assets/discussion/Discussion_alt_profile_pic.svg';
 import response_icon from '../../image_assets/discussion/response.svg';
 import ArrowUpwardIcon from '@material-ui/icons/ArrowUpward';
 import ArrowDownwardIcon from '@material-ui/icons/ArrowDownward';
-import { FaCommentDots } from 'react-icons/fa';
 import SendIcon from '@material-ui/icons/Send';
 import Button from '@material-ui/core/Button';
 
@@ -33,11 +30,11 @@ const use_styles = makeStyles((theme) => ({
       date: {
         display: 'flex',
       },
-      author_profile_picture : {
-        width: theme.spacing(5),
-        height: theme.spacing(5),
-        objectFit: 'cover',
-      },
+    //   author_profile_picture : {
+    //     width: theme.spacing(5),
+    //     height: theme.spacing(5),
+    //     objectFit: 'cover',
+    //   },
       ArrowUpwardIconStyle: {
           padding: '0.5vw',
           mrginRight:'10vw',
@@ -59,10 +56,11 @@ const use_styles = makeStyles((theme) => ({
         height: '2.3vw',
       },
       SendIconStyle: {
-        padding: '0.5vw',
-        borderRadius: '10px',
-        color: 'white',
-        backgroundColor: '#05386B',
+        color: '#05386B',
+        paddingBottom: '0.4vh',
+        fontSize: '1.8vw',
+        backgroundColor: '#F8F8F8',
+        transform: 'rotate(-45deg)',
       },
       'button-clear-post-style' : {
           color: 'black',
@@ -93,7 +91,7 @@ export default function Discussion() {
                     <div className='discussion-icons'>
                         <ArrowUpwardIcon className={classes.ArrowDownwardIconStyle} />
                         <ArrowDownwardIcon className={classes.ArrowDownwardIconStyle} />
-                        <img src={response_icon} className={classes.ResponseIconStyle} />
+                        <img src={response_icon} className={classes.ResponseIconStyle} alt='' />
                         <SendIcon className={classes.SendIconStyle} />
                     </div>
                 </div>
@@ -113,7 +111,7 @@ export default function Discussion() {
                     <div className='discussion-icons'>
                         <ArrowUpwardIcon className={classes.ArrowDownwardIconStyle} />
                         <ArrowDownwardIcon className={classes.ArrowDownwardIconStyle} />
-                        <img src={response_icon} className={classes.ResponseIconStyle} />
+                        <img src={response_icon} className={classes.ResponseIconStyle} alt='' />
                         <SendIcon className={classes.SendIconStyle} />
                     </div>
                 </div>
@@ -133,7 +131,7 @@ export default function Discussion() {
                     <div className='discussion-icons'>
                         <ArrowUpwardIcon className={classes.ArrowDownwardIconStyle} />
                         <ArrowDownwardIcon className={classes.ArrowDownwardIconStyle} />
-                        <img src={response_icon} className={classes.ResponseIconStyle} />
+                        <img src={response_icon} className={classes.ResponseIconStyle} alt='' />
                         <SendIcon className={classes.SendIconStyle} />
                     </div>
                 </div>
@@ -153,7 +151,7 @@ export default function Discussion() {
                     <div className='discussion-icons'>
                         <ArrowUpwardIcon className={classes.ArrowDownwardIconStyle} />
                         <ArrowDownwardIcon className={classes.ArrowDownwardIconStyle} />
-                        <img src={response_icon} className={classes.ResponseIconStyle} />
+                        <img src={response_icon} className={classes.ResponseIconStyle} alt='' />
                         <SendIcon className={classes.SendIconStyle} />
                     </div>
                 </div>
@@ -173,7 +171,7 @@ export default function Discussion() {
                     <div className='discussion-icons'>
                         <ArrowUpwardIcon className={classes.ArrowDownwardIconStyle} />
                         <ArrowDownwardIcon className={classes.ArrowDownwardIconStyle} />
-                        <img src={response_icon} className={classes.ResponseIconStyle} />
+                        <img src={response_icon} className={classes.ResponseIconStyle} alt='' />
                         <SendIcon className={classes.SendIconStyle} />
                     </div>
                 </div>

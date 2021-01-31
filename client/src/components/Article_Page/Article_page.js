@@ -7,8 +7,6 @@ import EventNoteIcon from '@material-ui/icons/EventNote';
 import Rating from '@material-ui/lab/Rating';
 import { makeStyles } from '@material-ui/core/styles';
 import ShareIcon from '@material-ui/icons/Share';
-import clsx from 'clsx';
-import Badge from '@material-ui/core/Badge';
 import Avatar from '@material-ui/core/Avatar';
 import AccountCircleIcon from '@material-ui/icons/AccountCircle';
 import LinkedInIcon from '@material-ui/icons/LinkedIn';
@@ -38,16 +36,21 @@ const use_styles = makeStyles({
         fontSize: '2vw',
     },
     searchbarStyle: {
-        borderRadius: '15px',
-        width: '12vw',
+        display: 'flex',
+        flexDirection: 'row',
+        borderRadius:'15px',
+        marginRight: '1vw',
         backgroundColor: '#62F2AD',
         marginTop: '5vh',
         marginBottom: '1vh',
     },
     rating: {
+        // display: 'flex',
+        // flexDirection: 'row',
         color: '#62F2AD',
+        // width: '25vw',
+        // height: '25vh',
         fontSize: '2.5vw',
-        paddingLeft: '0.8vw',
     },
     article_related_vids_discuss_nav_button: {
         boxShadow: '0 0 8px -4px rgba(0,0,0,.5)',
@@ -85,9 +88,9 @@ const use_styles = makeStyles({
         justifyContent: 'left',
         alignItems: 'left',
         cursor: 'pointer',
-        padding: '1vh',
+        padding: '1vw',
         paddingTop: '1.5vh',
-        width: '15vw',
+        width: '14vw',
         transition: 'all 1.5s',
     },
     article_page_main_left_container_inactive: {
@@ -161,14 +164,12 @@ const use_styles = makeStyles({
 
 export default function Article_page() {
     const classes = use_styles();
-
     const [navStyle_article,setNavStyleArticle] = useState(classes.article_related_vids_discuss_nav_button_active);
     const [navStyle_videos,setNavStyleVideos] = useState(classes.article_related_vids_discuss_nav_button_inactive);
     const [navStyle_discuss,setNavStyleDiscuss] = useState(classes.article_related_vids_discuss_nav_button_inactive);
-    const [linkStyle,setLinkStyle] = useState(classes['link-active']);
+    // const [linkStyle,setLinkStyle] = useState(classes['link-active']);
     const [ArticlePageMainLeftContainerBadgeStyle,setStateArticlePageMainLeftContainerBadgeStyle] = useState(classes.badgeStyleActive);
     const [ArticlePageMainLeftContainer,setArticlePageMainLeftContainerVisibility] = useState(classes.article_page_main_left_container_active);
-    // const circle = <div className={clsx(classes.shape, classes.shapeCircle)} ><p className={classes.badgeText}>{ArticlePageMainLeftContainerText}</p></div>;
 
     function ArticlePageMainLeftContainerVisibility(e)
     {
@@ -212,19 +213,19 @@ export default function Article_page() {
     return (
         <Router>
         <div className='article-page-main-container'>
-                    <div className={ArticlePageMainLeftContainer}>
-                        <div className='article-page-main-left-container-search-box'>
-                            <SearchBar className={classes.searchbarStyle} />
-                            <Link to='#' Style='text-decoration:none;'><div className='article-page-main-left-container-topic-names'>Topic 1 name</div></Link>
-                            <Link to='#' Style='text-decoration:none;'><div className='article-page-main-left-container-topic-names'>Topic 1</div></Link>
-                        </div>
-                        <div className='article-page-main-left-container-todo-bookmark-rate-box'>
-                            <div className='article-page-main-left-container-todo-bookmark-rate-box-text'>Addthis to you to do list <EventNoteIcon className={classes.todoStyle} /></div>
-                            <div className='article-page-main-left-container-todo-bookmark-rate-box-text'>Addthis to you to do list <BookmarkBorderIcon className={classes.bookmarkStyle} /></div>
-                            <div className='article-page-main-left-container-todo-bookmark-rate-box-text'>Rate this article</div>
-                            <Rating max={5} className={classes.rating} />
-                        </div>
+                <div className={ArticlePageMainLeftContainer}>
+                    <div className='article-page-main-left-container-search-box'>
+                        <SearchBar className={classes.searchbarStyle} />
+                        <Link to='#' Style='text-decoration:none;'><div className='article-page-main-left-container-topic-names'>Topic 1 name</div></Link>
+                        <Link to='#' Style='text-decoration:none;'><div className='article-page-main-left-container-topic-names'>Topic 1</div></Link>
                     </div>
+                    <div className='article-page-main-left-container-todo-bookmark-rate-box'>
+                        <div className='article-page-main-left-container-todo-bookmark-rate-box-text'>Addthis to you to do list <EventNoteIcon className={classes.todoStyle} /></div>
+                        <div className='article-page-main-left-container-todo-bookmark-rate-box-text'>Addthis to you to do list <BookmarkBorderIcon className={classes.bookmarkStyle} /></div>
+                        <div className='article-page-main-left-container-todo-bookmark-rate-box-text'>Rate this article</div>
+                        <Rating max={5} className={classes.rating} size='large'/>
+                    </div>
+                </div>
                 <div className='article-page-main-right-container'>
                     <div className='article-related-videos-discuss' Style='margin-left:2vw;'>
                         <FcCollapse className={ArticlePageMainLeftContainerBadgeStyle} onClick={(e) => ArticlePageMainLeftContainerVisibility(e)} />

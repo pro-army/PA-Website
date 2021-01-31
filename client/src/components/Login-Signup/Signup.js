@@ -6,8 +6,7 @@ import { makeStyles } from "@material-ui/core/styles";
 import Container from "@material-ui/core/Container";
 import "../css/signup.css";
 import { AuthContext } from "../Context/AuthContext";
-import { useHistory } from "react-router-dom";
-import LoginCardBackground from '../../image_assets/login-signup/LoginCardBackground.svg'
+// import { useHistory } from "react-router-dom";  
 import BackgroundWithTrees from '../../image_assets/login-signup/SignupBackgroundWithTrees.svg'
 import GirlWithLaptop from '../../image_assets/login-signup/Group 122.svg'
 import LinkedinLogin from "./LoginwithLinkedin";
@@ -18,13 +17,6 @@ import FormEmailIcon from '../../image_assets/login-signup/FormEmailIcon.svg'
 import LoginFacebook from "./LoginwithFacebook";
 import LoginwithGithub from "./LoginwithGithub";
 import Message from "./Message";
-import GoogleIcon from '../../image_assets/login-signup/GoogleIcon.svg'
-import FacebookIcon from '../../image_assets/login-signup/FacebookIcon.svg'
-import LinkedinIcon from '../../image_assets/login-signup/LinkedinIcon.svg'
-import TelegramIcon from '../../image_assets/login-signup/TelegramIcon.svg'
-import YoutubeIcon from '../../image_assets/login-signup/YoutubeIcon.svg'
-import GithubIcon from '../../image_assets/login-signup/GithubIcon.svg'
-import TwitterIcon from '../../image_assets/login-signup/TwitterIcon.svg'
 
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Prompt:wght@100&display=swap');
@@ -89,15 +81,13 @@ const useStyles = makeStyles((theme) => ({
 
 export default function Signup() {
     const classes = useStyles();
-    const history = useHistory();
+    // const history = useHistory();
 
     const [user, setUser] = useState({
-        userRole: 1,
         email: " ",
         password: "",
-        confirmPassword: "",
-        name: "",
-        skills: "",
+        first_name: "",
+        last_name: "",
     });
 
     function isEmail(email) {
@@ -116,31 +106,25 @@ export default function Signup() {
 
     const submitHandler = (e) => {
         e.preventDefault();
-        fetch("https://jobs-api.squareboat.info/api/v1/auth/register", {
+        fetch("https://programmers-army-dev-backend.herokuapp.com/api/user/register", {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
             },
             body: JSON.stringify(user),
         })
-            .then((response) => response.json())
-            .then((data) => {
+        .then((response) => response.json())
+        .then((data) => {
                 console.log("Success:", data);
-                if (data.code === 201) {
+                if (!data.error) 
+                {
                     localStorage.setItem("isAuthenticated", true);
                     localStorage.setItem("token", data.data.token);
-                    localStorage.setItem("userRole", data.data.userRole);
-                    localStorage.setItem("userName", data.data.name);
+                    // localStorage.setItem("userName", data.data.name);
                     authContext.setUser(data.data);
                     authContext.setIsAuthenticated(true);
-                    if (data.data.userRole === 0) {
-                        history.push("/Jobs__PostedByYou");
-                    } else {
-                        history.push("/Jobs__PostedForYou");
-                    }
-                } else {
-                    setMessage(data.errors);
-                }
+                } 
+                else setMessage(data.errorBody);
             })
             .catch((error) => {
                 console.error("Error:", error);
@@ -150,7 +134,7 @@ export default function Signup() {
     return (
         <div className='login-items-position'>
         <img src={GirlWithLaptop} className='girl-with-laptop' alt='girl with laptop' />
-        {window.location.pathname === '/signup' ? <img src={BackgroundWithTrees} className={classes['background-with-trees']} /> : null}
+        <img src={BackgroundWithTrees} className={classes['background-with-trees']} alt='background-with-trees' />
         <div className='signup-container'>
             <Container className={classes["signup-background"]}>
                     <Container component="Signup" maxWidth="xs" Style='margin-right:0vw;margin-left:0vw;padding-right:0vw;'>
@@ -163,9 +147,9 @@ export default function Signup() {
                                         margin="normal"
                                         required
                                         fullWidth
-                                        id="name"
-                                        label="Name"
-                                        name="name"
+                                        id="first_name"
+                                        label="First Name"
+                                        name="first_name"
                                         autoComplete="off"
                                         // value={user.email}
                                         onChange={changeHandler}
@@ -179,13 +163,11 @@ export default function Signup() {
                                         margin="normal"
                                         required
                                         fullWidth
-                                        id="username"
-                                        label="Username"
-                                        name="username"
+                                        id="last_name"
+                                        label="Last Name"
+                                        name="last_name"
                                         autoComplete="off"
-                                        // value={user.email}
                                         onChange={changeHandler}
-                                        // error={user.email === ""}
                                     />
                                 </div>
                                 <div Style='display:flex;'>
@@ -199,9 +181,7 @@ export default function Signup() {
                                         label="Email Address"
                                         name="email"
                                         autoComplete="off"
-                                        // value={user.email}
                                         onChange={changeHandler}
-                                        // error={user.email === ""}
                                     />
                                 </div>
                                 <div Style='display:flex;'>
@@ -218,7 +198,6 @@ export default function Signup() {
                                         autoComplete="off"
                                         value={user.password}
                                         onChange={changeHandler}
-                                        error={user.password === ""}
                                     />
                                 </div>
                                     {message && <Message text={message} />}
@@ -256,30 +235,6 @@ export default function Signup() {
                         </Link>
                     </div>
             </Container>
-    </div>
-    <div className='login-footer'>
-        <div Style='font-family:Montserrat;font-weight:700;'>Follow us on</div>
-        <div>
-            {/* <a href=''>
-                <img src={GoogleIcon} alt='google' />
-            </a> */}
-            <a href='https://www.facebook.com/Programmers-Army-105809441239783'>
-                <img src={FacebookIcon} alt='facebook' />
-            </a>
-            {/* <a href=''>
-                <img src={TelegramIcon} alt='telegram' />
-            </a> */}
-            <a href='https://www.youtube.com/channel/UCRJS3O94F8cOj2U0gOUwmBA'>
-                <img src={YoutubeIcon} alt='youtube' />
-            </a>
-            {/* <a href=''>
-                <img src={LinkedinIcon} alt='Linkedin' />
-            </a> */}
-            <a href='https://twitter.com/ProgrammingArmy'>
-                <img src={TwitterIcon} alt='Twitter' />
-            </a>
-        </div>
-        <div Style='font-family:Montserrat;font-weight:300;'>Copyright © Programmers Army All rights reserved 2020</div>
     </div>
 </div>
     );
