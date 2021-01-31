@@ -5,7 +5,7 @@ const Domain = require("./Domain");
 const User = require("./User");
 
 // Create Schema for Article
-const AtricleSchema = new mongoose.Schema(
+const UnVerifiedAtricleSchema = new mongoose.Schema(
     {
         title: {
             type: String,
@@ -86,14 +86,9 @@ const AtricleSchema = new mongoose.Schema(
                 type: String,
             },
         },
-        verifier: {
-            _id: {
-                type: mongoose.Schema.Types.ObjectId,
-                ref: "User",
-            },
-            verifierName: {
-                type: String,
-            },
+        status: {
+            type: String,
+            default: "pending",
         },
         domains: [
             {
@@ -107,4 +102,4 @@ const AtricleSchema = new mongoose.Schema(
     }
 );
 
-module.exports = mongoose.model("Article", AtricleSchema);
+module.exports = mongoose.model("UnVerifiedArticle", UnVerifiedAtricleSchema);

@@ -5,6 +5,8 @@ const fetch = require("node-fetch");
 
 const User = require("../models/User");
 const Article = require("../models/Article");
+const UnVerifiedArticle = require("../models/UnVerifiedArticle");
+
 const Domain = require("../models/Domain");
 
 exports.getAllDomains = (req, res) => {
@@ -93,7 +95,8 @@ exports.createArticle = async (req, res) => {
         });
     } else {
         const domains = await getDomains(req.body.domains);
-        const newArticle = new Article({
+        // console.log(domains);
+        const newArticle = new UnVerifiedArticle({
             title,
             small_description: req.body.small_description,
             content,
@@ -112,17 +115,6 @@ exports.createArticle = async (req, res) => {
                     errorBody: "Internal Server Error",
                 });
             } else {
-                domains.forEach((_id) => {
-                    Domain.updateOne(
-                        { _id },
-                        { $push: { articles: { _id: article._id, title } } },
-                        (err) => {
-                            if (err) {
-                                console.log(err);
-                            }
-                        }
-                    );
-                });
                 res.status(201).json({
                     error: false,
                     article,
@@ -130,6 +122,113 @@ exports.createArticle = async (req, res) => {
                 });
             }
         });
+    }
+};
+
+exports.verifyArticle = async (req, res) => {
+    const { _id, accept } = req.body;
+    if (!_id) {
+        res.status(400).json({
+            error: true,
+            errorBody: "_id of the Article required!",
+        });
+    } else {
+        try {
+            const unVerifiedArticle = await UnVerifiedArticle.findById(_id);
+            if (!unVerifiedArticle) {
+                res.status(400).json({
+                    error: true,
+                    errorBody: "No Such Article",
+                });
+            } else {
+                if (accept) {
+                    const domains = unVerifiedArticle.domains;
+                    const newArticle = new Article({
+                        title: unVerifiedArticle.title,
+                        content: unVerifiedArticle.content,
+                        author: unVerifiedArticle.author,
+                        small_description: unVerifiedArticle.small_description,
+                        picture: unVerifiedArticle.picture,
+                        difficulty: unVerifiedArticle.difficulty.difficulty,
+                        domains: unVerifiedArticle.domains,
+                        createdAt: unVerifiedArticle.createdAt,
+                        verifier: {
+                            _id: req.user._id,
+                            verifierName: req.user.name,
+                        },
+                    });
+                    newArticle.save((err, article) => {
+                        if (err) {
+                            res.status(500).json({
+                                error: true,
+                                errorBody: "Internal Server Error",
+                            });
+                        } else {
+                            UnVerifiedArticle.deleteOne(
+                                { _id: unVerifiedArticle._id },
+                                (err) => {
+                                    if (err) {
+                                        console.log(err);
+                                    }
+                                }
+                            );
+                            domains.forEach((_id) => {
+                                Domain.updateOne(
+                                    { _id },
+                                    {
+                                        $push: {
+                                            articles: article._id,
+                                        },
+                                    },
+                                    (err) => {
+                                        if (err) {
+                                            console.log(err);
+                                        }
+                                    }
+                                );
+                            });
+                            let points = 0;
+                            if (article.difficulty === "easy") points = 10;
+                            if (article.difficulty === "medium") points = 20;
+                            if (article.difficulty === "hard") points = 30;
+                            User.updateOne(
+                                { _id: article.author._id },
+                                { $inc: { contribution_points: points } },
+                                (err) => {
+                                    if (err) {
+                                        console.log(err);
+                                    }
+                                }
+                            );
+                            res.status(200).json({
+                                error: false,
+                                article,
+                                message: "Article Verified Succefully",
+                            });
+                        }
+                    });
+                } else {
+                    UnVerifiedArticle.updateOne(
+                        { _id },
+                        { $set: { status: "rejected" } },
+                        (err) => {
+                            if (err) {
+                                console.log(err);
+                            }
+                        }
+                    );
+                    res.status(200).json({
+                        error: false,
+                        message: "Article Rejected Succefully",
+                    });
+                }
+            }
+        } catch {
+            res.status(500).json({
+                error: true,
+                errorBody: "Internal Server Error last",
+            });
+        }
     }
 };
 
@@ -150,33 +249,37 @@ exports.getAllArticles = (req, res) => {
 };
 
 exports.getDomainArticles = (req, res) => {
-    console.log(req.query);
     const { _id } = req.query;
-    Domain.findOne({ _id }, (err, docs) => {
-        if (err) {
-            res.status(500).json({
-                error: true,
-                errorBody: "Internal Server Error",
-            });
-        } else if (docs) {
-            res.status(200).json({
-                error: false,
-                domain: docs,
-            });
-        } else {
-            res.status(400).json({
-                error: true,
-                errorBody: "No such Domain Exists!",
-            });
-        }
-    });
+
+    Domain.findById(_id)
+        .populate({
+            path: "articles",
+            select:
+                "title difficulty ratings.overall_rating_points numberOfViews",
+        })
+        .exec((err, docs) => {
+            if (err) {
+                res.status(500).json({
+                    error: true,
+                    errorBody: "Internal Server Error",
+                });
+            } else if (docs) {
+                res.status(200).json({
+                    error: false,
+                    domain: docs,
+                });
+            } else {
+                res.status(400).json({
+                    error: true,
+                    errorBody: "No such Domain Exists!",
+                });
+            }
+        });
 };
 
 exports.getArticleById = (req, res) => {
     console.log(req.query);
     const { _id } = req.query;
-    const limit = req.query.limit || 10;
-    const filter = req.query.limit || "ratings";
     Article.findOne({ _id }, (err, article) => {
         if (err) {
             res.status(500).json({
@@ -200,46 +303,36 @@ exports.getArticleById = (req, res) => {
 exports.getDomainArticlesByFilter = (req, res) => {
     console.log(req.query);
     const { _id } = req.query;
-    // { path: "articles._id" }
+    let limit = req.query.limit || 20;
+    limit = parseInt(limit);
+    let filter = req.query.filter;
+    if (!filter || filter === "overall_rating_points") {
+        filter = "ratings.overall_rating_points";
+    }
     Domain.findById(_id)
         .populate({
-            path: "articles._id",
-            select: "title small_description ratings",
-            //   , match: { color: 'black' }
-            // options: { sort: { numberOfViews: -1 } },
+            path: "articles",
+            options: {
+                limit: limit,
+                sort: { [filter]: -1 },
+            },
         })
         .exec((err, docs) => {
             if (err) {
                 res.status(500).json({
                     error: true,
                     errorBody: "Internal Server Error",
-                    err,
-                    docs,
                 });
-            } else {
+            } else if (docs) {
                 res.status(200).json({
                     error: false,
                     domain: docs,
                 });
+            } else {
+                res.status(400).json({
+                    error: true,
+                    errorBody: "No such Domain Exists!",
+                });
             }
         });
-
-    // Domain.findOne({ _id }, (err, domain) => {
-    //     if (err) {
-    //         res.status(500).json({
-    //             error: true,
-    //             errorBody: "Internal Server Error",
-    //         });
-    //     } else if (domain) {
-    //         res.status(200).json({
-    //             error: false,
-    //             domain: domain,
-    //         });
-    //     } else {
-    //         res.status(400).json({
-    //             error: true,
-    //             errorBody: "No such Domain Exists!",
-    //         });
-    //     }
-    // });
 };
