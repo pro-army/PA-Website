@@ -3,6 +3,7 @@ import FacebookLogin from "react-facebook-login";
 import axios from "axios";
 import FacebookIcon from '../../image_assets/login-signup/FacebookIcon.svg'
 import { makeStyles } from "@material-ui/core/styles";
+import { useHistory } from "react-router-dom";
 
 const useStyles = makeStyles((theme) => ({
     'login-facebook-icon': {
@@ -21,11 +22,12 @@ const useStyles = makeStyles((theme) => ({
 
 function LoginwithFacebook() {
     const classes = useStyles();
+    const history = useHistory();
     const responseFacebook = (response) => {
         console.log(response);
         axios({
             method: "POST",
-            url: "http://localhost:4000/api/user/login/facebook",
+            url: "https://programmers-army-dev-backend.herokuapp.com/api/user/login/facebook",
             data: {
                 accessToken: response.accessToken,
                 userID: response.userID,
@@ -33,6 +35,11 @@ function LoginwithFacebook() {
         })
             .then((response) => {
                 console.log(response);
+                localStorage.setItem("isAuthenticated", true);
+                console.log(response.data.token);
+                localStorage.setItem("token", response.data.token);
+                // history.push("/");
+                history.push("/");
             })
             .catch((err) => console.log(err));
     };

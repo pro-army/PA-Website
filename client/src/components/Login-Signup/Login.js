@@ -6,7 +6,7 @@ import { makeStyles } from "@material-ui/core/styles";
 import Container from "@material-ui/core/Container";
 import Message from "./Message";
 import "../css/login.css";
-// import { useHistory } from "react-router-dom";
+import { useHistory } from "react-router-dom";
 import { AuthContext } from "../Context/AuthContext";
 import BackgroundWithTrees from '../../image_assets/login-signup/LoginBackgroundWithTrees.svg'
 import GirlWithLaptop from '../../image_assets/login-signup/Group 122.svg'
@@ -86,7 +86,7 @@ export default function Login() {
     const [user, setUser] = useState({ email: "", password: "" });
     const [message, setMessage] = useState("");
 
-    // const history = useHistory();
+    const history = useHistory();
     const changeHandler = (e) => {
         setUser({ ...user, [e.target.name]: e.target.value });
     };
@@ -98,7 +98,6 @@ export default function Login() {
 
     const submitHandler = (e) => {
         e.preventDefault();
-        clearData();
         fetch("https://programmers-army-dev-backend.herokuapp.com/api/user/login", {
             method: "POST",
             headers: {
@@ -110,20 +109,24 @@ export default function Login() {
             .then((data) => {
                 console.log("Success:", data);
                 if (!data.error) {
-                    // console.log(authContext);
+                    console.log(data);
                     localStorage.setItem("isAuthenticated", true);
-                    localStorage.setItem("token", data.data.token);
-                    localStorage.setItem("userRole", data.data.userRole);
-                    localStorage.setItem("userName", data.data.name);
-                    fetch(`https://programmers-army-dev-backend.herokuapp.com/api/user/${user.email}`)
-                    .then((response) => response.json())
-                    .then((data) => {
-                        console.log(data);
-                    })
-                    authContext.setUser(data.data);
-                    authContext.setIsAuthenticated(true);
+                    // localStorage.setItem("token", data.data.token);
+                    // localStorage.setItem("userRole", data.data.userRole);
+                    // localStorage.setItem("userName", data.data.name);
+                    // fetch(`https://programmers-army-dev-backend.herokuapp.com/api/user/${user.email}`)
+                    // .then((response) => response.json())
+                    // .then((data) => {
+                    //     console.log(data);
+                    // })
+                    // authContext.setUser(data.data);
+                    // authContext.setIsAuthenticated(true);
+                    clearData();
+                    history.push("/");
+                    
                 } else {
                     setMessage(data.errorBody);
+                    clearData();
                 }
             })
             .catch((error) => {

@@ -3,6 +3,7 @@ import GitHubLogin from "react-github-login";
 import axios from "axios";
 import GithubIcon from '../../image_assets/login-signup/GithubIcon.svg'
 import { makeStyles } from "@material-ui/core/styles";
+import { useHistory } from "react-router-dom";
 
 const useStyles = makeStyles((theme) => ({
     'login-github-icon': {
@@ -20,15 +21,20 @@ const useStyles = makeStyles((theme) => ({
 }));
 function LoginwithGithub() {
     const classes = useStyles();
+    const history = useHistory();
     const onSuccess = (response) => {
         console.log(response);
         axios({
             method: "POST",
-            url: "http://localhost:4000/api/user/login/github",
+            url: "https://programmers-army-dev-backend.herokuapp.com/api/user/login/github",
             data: { code: response.code },
         })
             .then((response) => {
                 console.log(response);
+                localStorage.setItem("isAuthenticated", true);
+                console.log(response.data.token);
+                localStorage.setItem("token", response.data.token);
+                history.push("/");
             })
             .catch((err) => console.log(err));
     };

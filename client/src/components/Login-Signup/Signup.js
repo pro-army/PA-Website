@@ -6,7 +6,7 @@ import { makeStyles } from "@material-ui/core/styles";
 import Container from "@material-ui/core/Container";
 import "../css/signup.css";
 import { AuthContext } from "../Context/AuthContext";
-// import { useHistory } from "react-router-dom";  
+import { useHistory } from "react-router-dom";  
 import BackgroundWithTrees from '../../image_assets/login-signup/SignupBackgroundWithTrees.svg'
 import GirlWithLaptop from '../../image_assets/login-signup/Group 122.svg'
 import LinkedinLogin from "./LoginwithLinkedin";
@@ -81,7 +81,7 @@ const useStyles = makeStyles((theme) => ({
 
 export default function Signup() {
     const classes = useStyles();
-    // const history = useHistory();
+    const history = useHistory();
 
     const [user, setUser] = useState({
         email: " ",
@@ -118,11 +118,14 @@ export default function Signup() {
                 console.log("Success:", data);
                 if (!data.error) 
                 {
+                    console.log(data);
                     localStorage.setItem("isAuthenticated", true);
+                    console.log(data.data.token);
                     localStorage.setItem("token", data.data.token);
                     // localStorage.setItem("userName", data.data.name);
                     authContext.setUser(data.data);
-                    authContext.setIsAuthenticated(true);
+                    // authContext.setIsAuthenticated(true);
+                    // history.push("/");
                 } 
                 else setMessage(data.errorBody);
             })
