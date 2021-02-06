@@ -16,6 +16,7 @@ import LinkedinLogin from "./LoginwithLinkedin";
 import LoginGoogle from "./Loginwithgoogle";
 import LoginFacebook from "./LoginwithFacebook";
 import LoginwithGithub from "./LoginwithGithub";
+import {userProfileDataContext} from '../../App'
 
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Prompt:wght@100&display=swap');
@@ -85,6 +86,7 @@ export default function Login() {
     const classes = useStyles();
     const [user, setUser] = useState({ email: "", password: "" });
     const [message, setMessage] = useState("");
+    const userprofileDataContext = useContext(userProfileDataContext);
 
     const history = useHistory();
     const changeHandler = (e) => {
@@ -109,8 +111,10 @@ export default function Login() {
             .then((data) => {
                 console.log("Success:", data);
                 if (!data.error) {
-                    console.log(data);
-                    localStorage.setItem("isAuthenticated", true);
+                    // console.log(data);
+                    userprofileDataContext.setuserProfileData(data);
+
+                    // localStorage.setItem("isAuthenticated", true);
                     // localStorage.setItem("token", data.data.token);
                     // localStorage.setItem("userRole", data.data.userRole);
                     // localStorage.setItem("userName", data.data.name);
@@ -122,7 +126,7 @@ export default function Login() {
                     // authContext.setUser(data.data);
                     // authContext.setIsAuthenticated(true);
                     clearData();
-                    history.push("/");
+                    // history.push("/");
                     
                 } else {
                     setMessage(data.errorBody);

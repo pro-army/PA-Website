@@ -17,6 +17,7 @@ import FormEmailIcon from '../../image_assets/login-signup/FormEmailIcon.svg'
 import LoginFacebook from "./LoginwithFacebook";
 import LoginwithGithub from "./LoginwithGithub";
 import Message from "./Message";
+import {userProfileDataContext} from '../../App'
 
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Prompt:wght@100&display=swap');
@@ -99,7 +100,7 @@ export default function Signup() {
 
     const [message, setMessage] = useState([]);
     const authContext = useContext(AuthContext);
-
+    const userprofileDataContext = useContext(userProfileDataContext);
     const changeHandler = (e) => {
         setUser({ ...user, [e.target.name]: e.target.value });
     };
@@ -119,12 +120,7 @@ export default function Signup() {
                 if (!data.error) 
                 {
                     console.log(data);
-                    localStorage.setItem("isAuthenticated", true);
-                    console.log(data.data.token);
-                    localStorage.setItem("token", data.data.token);
-                    // localStorage.setItem("userName", data.data.name);
-                    authContext.setUser(data.data);
-                    // authContext.setIsAuthenticated(true);
+                    userprofileDataContext.setuserProfileData(data);
                     // history.push("/");
                 } 
                 else setMessage(data.errorBody);

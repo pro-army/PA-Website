@@ -1,9 +1,10 @@
-import React from "react";
+import React,{useContext} from "react";
 import { LinkedIn } from "react-linkedin-login-oauth2";
 import axios from "axios";
 import LinkedinIcon from '../../image_assets/login-signup/LinkedinIcon.svg'
 import { makeStyles } from "@material-ui/core/styles";
 import { useHistory } from "react-router-dom";
+import {userProfileDataContext} from '../../App'
 
 const useStyles = makeStyles((theme) => ({
     'login-linkedin-icon': {
@@ -24,6 +25,7 @@ const useStyles = makeStyles((theme) => ({
 function LoginwithLinkedinButton() {
     const classes = useStyles();
     const history = useHistory();
+    const userprofileDataContext = useContext(userProfileDataContext);
     const handleFailure = (response) => {
         console.log(response);
         
@@ -36,9 +38,7 @@ function LoginwithLinkedinButton() {
             })
             .then((response) => {
                 console.log(response);
-                localStorage.setItem("isAuthenticated", true);
-                console.log(response.data.token);
-                localStorage.setItem("token", response.data.token);
+                userprofileDataContext.setuserProfileData(response.data);
                 history.push("/");
             })
             .catch((err) => {

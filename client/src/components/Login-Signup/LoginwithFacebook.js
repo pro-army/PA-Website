@@ -1,9 +1,10 @@
-import React from "react";
+import React,{useContext} from "react";
 import FacebookLogin from "react-facebook-login";
 import axios from "axios";
 import FacebookIcon from '../../image_assets/login-signup/FacebookIcon.svg'
 import { makeStyles } from "@material-ui/core/styles";
 import { useHistory } from "react-router-dom";
+import {userProfileDataContext} from '../../App'
 
 const useStyles = makeStyles((theme) => ({
     'login-facebook-icon': {
@@ -22,6 +23,7 @@ const useStyles = makeStyles((theme) => ({
 
 function LoginwithFacebook() {
     const classes = useStyles();
+    const userprofileDataContext = useContext(userProfileDataContext);
     const history = useHistory();
     const responseFacebook = (response) => {
         console.log(response);
@@ -35,10 +37,7 @@ function LoginwithFacebook() {
         })
             .then((response) => {
                 console.log(response);
-                localStorage.setItem("isAuthenticated", true);
-                console.log(response.data.token);
-                localStorage.setItem("token", response.data.token);
-                // history.push("/");
+                userprofileDataContext.setuserProfileData(response.data);
                 history.push("/");
             })
             .catch((err) => console.log(err));

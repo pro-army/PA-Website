@@ -1,9 +1,10 @@
-import React from "react";
+import React,{useContext} from "react";
 import GitHubLogin from "react-github-login";
 import axios from "axios";
 import GithubIcon from '../../image_assets/login-signup/GithubIcon.svg'
 import { makeStyles } from "@material-ui/core/styles";
 import { useHistory } from "react-router-dom";
+import {userProfileDataContext} from '../../App'
 
 const useStyles = makeStyles((theme) => ({
     'login-github-icon': {
@@ -22,6 +23,7 @@ const useStyles = makeStyles((theme) => ({
 function LoginwithGithub() {
     const classes = useStyles();
     const history = useHistory();
+    const userprofileDataContext = useContext(userProfileDataContext);
     const onSuccess = (response) => {
         console.log(response);
         axios({
@@ -31,9 +33,7 @@ function LoginwithGithub() {
         })
             .then((response) => {
                 console.log(response);
-                localStorage.setItem("isAuthenticated", true);
-                console.log(response.data.token);
-                localStorage.setItem("token", response.data.token);
+                userprofileDataContext.setuserProfileData(response.data);
                 history.push("/");
             })
             .catch((err) => console.log(err));

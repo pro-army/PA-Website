@@ -1,5 +1,4 @@
 .nav-bar {
-    /* justify-content: right; */
     align-items: center;
     display: flex;
     box-shadow: 0 0 8px -4px rgba(0,0,0,.5);
@@ -9,15 +8,11 @@
 
 .nav-bar-fields {
     display: flex;
-    /* justify-content: center; */
-    /* align-items: center; */
-    /* text-align: center; */
     margin-left: 1vw;
     color: #05386B;
     font-family: 'Montserrat';
     font-size: 2vw;
     font-weight: 700;
-    /* margin: 1vw; */
     transition: all 1.5s;
 }
 
@@ -26,7 +21,6 @@
     flex-direction: column;
     margin-top: 0.8vh;
     margin-left: 3vw;
-    /* margin-right: 35vw; */
 }
 
 .nav-bar-dropdown {
@@ -43,3 +37,7 @@
     padding-right: 0.5vw;   
 }
 
+.avatar-style {
+    object-fit: cover;
+    border-radius: 50%;
+}

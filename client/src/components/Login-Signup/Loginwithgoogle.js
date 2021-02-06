@@ -1,9 +1,10 @@
-import React from 'react';
+import React,{useContext} from 'react';
 import GoogleLogin from 'react-google-login';
 import axios from 'axios'
 import GoogleIcon from '../../image_assets/login-signup/GoogleIcon.svg'
 import { makeStyles } from "@material-ui/core/styles";
 import { useHistory } from "react-router-dom";
+import {userProfileDataContext} from '../../App'
 
 const useStyles = makeStyles((theme) => ({
     'login-google-icon': {
@@ -23,6 +24,7 @@ const useStyles = makeStyles((theme) => ({
 function LoginGoogle() {
   const classes = useStyles();
   const history = useHistory();
+  const userprofileDataContext = useContext(userProfileDataContext);
 
     const responseSuccessGoogle=(response)=>{
       
@@ -31,10 +33,7 @@ function LoginGoogle() {
           url:"https://programmers-army-dev-backend.herokuapp.com/api/user/login/google",
           data:{tokenId:response.tokenId,googleId:response.googleId}
         }).then(response=>{
-          console.log(response);
-          localStorage.setItem("isAuthenticated", true);
-          console.log(response.data.token);
-          localStorage.setItem("token", response.data.token);
+          userprofileDataContext.setuserProfileData(response.data);
           history.push("/");
         })
         .catch(err=>console.log(err))
