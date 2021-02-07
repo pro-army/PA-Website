@@ -1,6 +1,6 @@
 import React,{useContext} from 'react' 
 import '../css/profile_page.css'
-import profilepage_article_videos from './profilepage_article_videos'
+import ProfilePageArticleVideos from './ProfilePageArticleVideos'
 import {userProfileDataContext} from '../../App'
 import LinkedinIcon from '../../image_assets/login-signup/DarkLinkedinIcon.svg'
 import GithubIcon from '../../image_assets/login-signup/GithubIcon.svg'
@@ -59,10 +59,16 @@ export default function Profile_page() {
 
                 <div className='right-details-block'>
                     <div className='articles-block'>
-                        <profilepage_article_videos title={'article'} fullname='adarsh' />
+                        <ProfilePageArticleVideos title={'Articles'} fullname={'adarsh'} /> 
                     </div>
                     <div className='videos-block'>
-                        <profilepage_article_videos title={'videos'} fullname='adarsh' />
+                        <ProfilePageArticleVideos title={'Videos'} fullname={'adarsh'} />
+                    </div>
+                    <div className='bookmarked-articles-block'>
+                        <ProfilePageArticleVideos title={'Bookmarked Articles'} fullname={'adarsh'} />
+                    </div>
+                    <div className='todo-list-block'>
+                        <ProfilePageArticleVideos title={'Your To-Do list'} fullname={'adarsh'} />
                     </div>
                 </div>
             </div>

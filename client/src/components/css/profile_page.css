@@ -11,7 +11,7 @@
     height: 40vh;
     width: 98vw;
     border-radius: 25px;
-    margin-bottom: -5vh;
+    margin-bottom: -30vh;
 }
 
 .details-block {
@@ -68,7 +68,56 @@
 }
 
 .right-details-block {
-    background-color: #FFFFFF;
+    margin-left: 3vw;
+    height: 100vh;
+    overflow: scroll;
+    overflow-x: hidden;
+    /* overflow-y: hidden; */
+    /* background-color: #FFFFFF; */
+}
+
+.articles-block {
+    display: flex;
+    flex-direction: column;
+    border-radius: 25px;
+    box-shadow: 0 0 8px -4px rgba(0,0,0,.5);
+    display: flex;
+    background-color: white;
+    height: 55vh;
+    width: 65vw;
+}
+
+.videos-block {
+    margin-top: 3vh;
+    border-radius: 25px;
+    box-shadow: 0 0 8px -4px rgba(0,0,0,.5);
+    display: flex;
+    background-color: white;
+    height: 55vh;
+    width: 65vw;
+}
+.bookmarked-articles-block {
+    display: flex;
+    flex-direction: column;
+    margin-top: 3vh;
+    border-radius: 25px;
+    box-shadow: 0 0 8px -4px rgba(0,0,0,.5);
+    display: flex;
+    background-color: white;
+    height: 55vh;
+    width: 65vw;
+}
+
+.todo-list-block {
+    display: flex;
+    flex-direction: column;
+    margin-top: 3vh;
+    border-radius: 25px;
+    box-shadow: 0 0 8px -4px rgba(0,0,0,.5);
+    display: flex;
+    background-color: white;
+    height: 55vh;
+    width: 65vw;
 }
 
 .profilepage-articles-block{

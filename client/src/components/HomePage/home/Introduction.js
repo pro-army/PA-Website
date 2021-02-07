@@ -1,3 +1,5 @@
+// component to create first section of home page
+
 import React from 'react'
 import './Introduction.css'
 import PaFeatures from './PaFeatures'
@@ -23,7 +25,8 @@ function Introduction() {
                 </div>
             </div>
 
-            <PaFeatures />
+            {/* slider that contains all features of PA */}
+            <PaFeatures /> 
             <a href = "#articles-section">
                 <div id = "arrow">
                     <i class="fas fa-chevron-down"></i>

@@ -1,20 +1,17 @@
+// component to add feature section
+
 import React, {useRef, useEffect, useState} from "react";
 import './PaFeatures.css'
-
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
-
 import Slider from "react-slick";
 
 export default function PaFeatures(props) {
-  const customSlider = useRef()
-  const next = () => {
-    customSlider.current.slickNext();
-  }
-  const previous = () => {
-    customSlider.current.slickPrev();
-  }
 
+  // reference of feature slider
+  const customSlider = useRef()
+
+  // settings for feature slider
   var settings = {
     centerMode: true,
     variableWidth: true,
@@ -23,13 +20,6 @@ export default function PaFeatures(props) {
     slidesToShow: 3,
     slidesToScroll: 1,
     swipeToSlide: true,
-    beforeChange: function(currentSlide, nextSlide) {
-      console.log("before change", currentSlide, nextSlide);
-    },
-    afterChange: function(currentSlide) {
-      console.log("after change", currentSlide);
-      console.log(customSlider.current);
-    },
     responsive: [
       {
         breakpoint: 548,
@@ -45,6 +35,8 @@ export default function PaFeatures(props) {
 
   return (
     <div id = "pa-features">
+
+      {/* main feature slider */}
       <Slider {...settings} ref = {customSlider}>
         <div class = "feature">
           <div className = "inner-feature">

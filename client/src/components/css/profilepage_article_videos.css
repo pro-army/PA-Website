@@ -1,0 +1,59 @@
+.right-details-block-heading-description-container {
+    margin-left: 2vw;
+    margin-top: 2vh;
+}
+
+.right-details-block-heading {
+    font-family: 'Montserrat';
+    font-size: 1.5vw;
+    font-weight: 800;
+}
+
+.right-details-block-description {
+    display: flex;
+    font-size: 1vw;
+    font-family: 'Prompt';
+    font-weight: 500;
+}
+
+.right-details-block-description > p { 
+    margin-left: 0.3vw;
+    font-size: 1vw;
+    font-family: 'Prompt';
+    font-weight: 600;
+}
+
+.right-details-block-videos {
+    width: 20vw;
+    height: 20vh;
+    border-radius: 5px;
+}
+
+.right-details-block-videos-container {
+    display: flex;
+    background-color: #05386B;
+}
+
+.right-details-block-article-container {
+    margin-top: 2vh;
+    overflow: scroll;
+    overflow-x: hidden;
+    height:42vh;
+    /* display: flex; */
+    /* justify-content: space-evenly; */
+    flex-direction: column;
+    width:61vw;
+    background-color: #05386B;
+}
+
+.right-details-block-profilepage-articles-block {
+    border-radius: 10px;
+    padding:1vw; 
+    margin: 0.8vw;
+    font-family: 'Montserrat';
+    font-weight: 600;
+    max-width: 10vw;
+    display: inline-block;
+    color: black;
+    background-color: white;
+}

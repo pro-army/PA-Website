@@ -24,12 +24,12 @@ div.articles {
   /* border: 1px solid; */
   display: grid;
   /* flex-wrap: wrap; */
-  grid-template-columns: auto auto auto;
+  grid-template-columns: 29% 29% 29%;
+
   grid-column-gap: 4vw;
 }
 
 div.articles div.article {
-  /* flex: 23%; */
   box-shadow: 1px 3px 5px rgb(187, 187, 187);
   /* border: 1px solid; */
   display: grid;
@@ -42,10 +42,12 @@ div.articles div.article {
   background: white;
 }
 
-div.article div.article-img {
+div.article .article-img {
   border: 1px solid;
+  width: 98%;
+  margin: 0px auto;
   height: 13vw;
-  background: #0f2f63;
+  /* background: #0f2f63; */
   box-shadow: 0px 10px 5px rgb(102, 102, 102);
   clip-path: circle(70% at 57% 10%);
 }
@@ -61,6 +63,9 @@ div.article div.article-content {
 div.article div.article-content h6 {
   margin: 0;
   font-size: 1.5vw;
+  height: 3.6vw;
+  /* border: 1px solid; */
+  overflow: hidden;
 }
 
 div.article div.article-content p {
@@ -109,3 +114,76 @@ div.article:nth-child(6) {
   }
 
 } */
+
+div.right-section div.filter-section {
+  padding: 0.8vw 1.5vw;
+  position: absolute;
+  top: -2.9vw;
+  right: 0;
+  z-index: 20000;
+  /* border: 1px solid; */
+}
+
+div.filter-section div.filter-image {
+  text-align: right;
+}
+
+div.filter-image img {
+  cursor: pointer;
+  width: 3.6vw;
+  height: 3.6vw;
+}
+
+div.filter-section .filter-form {
+  display: none;
+  /* border: 1px solid; */
+  width: 18.3vw;
+  background: white;
+  text-align: left;
+  padding: 1.5vw;
+}
+
+div.filter-form h3 {
+  font-size: 2.1vw;
+  margin: 0px;
+  padding: 0;
+}
+
+div.filter-form div.criteria {
+  margin: 1.5vw 0px 0px;
+  display: flex;
+  justify-content: space-between;
+  font-weight: 600;
+  font-size: 1.2vw;
+}
+
+div.criteria input {
+  width: 1.1vw;
+  height: 1.1vw;
+}
+
+div.criteria input:before {
+  content: '';
+  display: block;
+  width: 60%;
+  height: 60%;
+  margin: 20% auto;
+  border-radius: 50%;
+}
+
+div.criteria input:checked:before {
+  background: blue;
+}
+
+div.filter-form div.submit-btn {
+  margin: 1.5vw 0px 0px;
+  text-align: right;
+}
+
+div.submit-btn button {
+  border: none;
+  background: #5ef2a3;
+  padding: 0.1vw 1.1vw;
+  cursor: pointer;
+  font-size: 1.2vw;
+}
