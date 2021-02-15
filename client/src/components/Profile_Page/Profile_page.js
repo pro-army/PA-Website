@@ -7,7 +7,7 @@ import GithubIcon from '../../image_assets/login-signup/GithubIcon.svg'
 import ProfilePic from '../../image_assets/profile-page/profile-pic.svg'
 
 export default function Profile_page() {
-    const userprofileDataContext = useContext(userProfileDataContext);
+    const userprofileData = useContext(userProfileDataContext).userProfileData.user;
     return (
         <div className='main-container'>
             <style>@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@500&display=swap');</style>
@@ -16,11 +16,13 @@ export default function Profile_page() {
                 <div className='left-details-block'>
                     <div Style='display:flex;'>
                         <div className='profile-pic'>
-                            <img src={ProfilePic} alt='pic' />
+                            {
+                                userprofileData ? <img src={userprofileData.picture} alt='pic' /> : <img src={ProfilePic} alt='pic' />
+                            }
                         </div>
                         <div className='profile-name-username' Style='display:flex;flex-direction:column;'>
-                            <div className='profile-name'>Actual Name</div>
-                            <div className='profile-username'>username</div>
+                            <div className='profile-name'>{userprofileData.name}</div>
+                            <div className='profile-username'>{userprofileData.email}</div>
                         </div>
                     </div>
                     <p className='profile-companies-logo-container'>
@@ -49,17 +51,20 @@ export default function Profile_page() {
                     <div className='left-details-block-badges-earned'>
                         <p className='left-details-block-sub-headings'>Badges Earned</p>
                         <div className='left-details-block-badges-earned-images-container'>
+                            {
+                                userprofileData.badges.map((badge)=> <img className='left-details-block-badges-earned-images' src={badge} alt='badge' />)
+                            }
+                            {/* <img className='left-details-block-badges-earned-images' src='' alt='badge' />
                             <img className='left-details-block-badges-earned-images' src='' alt='badge' />
                             <img className='left-details-block-badges-earned-images' src='' alt='badge' />
-                            <img className='left-details-block-badges-earned-images' src='' alt='badge' />
-                            <img className='left-details-block-badges-earned-images' src='' alt='badge' />
+                            <img className='left-details-block-badges-earned-images' src='' alt='badge' /> */}
                         </div>
                     </div>
                 </div>
 
                 <div className='right-details-block'>
                     <div className='articles-block'>
-                        <ProfilePageArticleVideos title={'Articles'} fullname={'adarsh'} /> 
+                        <ProfilePageArticleVideos title={'Articles'} fullname={'adarsh'} articles_link={userprofileData.articles} /> 
                     </div>
                     <div className='videos-block'>
                         <ProfilePageArticleVideos title={'Videos'} fullname={'adarsh'} />

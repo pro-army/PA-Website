@@ -34,6 +34,7 @@ function LoginGoogle() {
           data:{tokenId:response.tokenId,googleId:response.googleId}
         }).then(response=>{
           userprofileDataContext.setuserProfileData(response.data);
+          console.log(response.data);
           history.push("/");
         })
         .catch(err=>console.log(err))

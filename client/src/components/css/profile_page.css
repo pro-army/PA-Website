@@ -12,6 +12,10 @@
     width: 98vw;
     border-radius: 25px;
     margin-bottom: -30vh;
+    transition: all 1.5s;
+}
+.upper-background:hover {
+    background-color: #78EFBA;
 }
 
 .details-block {
@@ -80,7 +84,7 @@
     display: flex;
     flex-direction: column;
     border-radius: 25px;
-    box-shadow: 0 0 8px -4px rgba(0,0,0,.5);
+    box-shadow: 0 0 8px -4px rgb(0 0 0 / 50%);
     display: flex;
     background-color: white;
     height: 55vh;

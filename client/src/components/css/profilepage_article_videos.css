@@ -24,26 +24,40 @@
 }
 
 .right-details-block-videos {
-    width: 20vw;
-    height: 20vh;
-    border-radius: 5px;
+    display: inline-block;
+    margin: 1vw;
+    overflow: hidden;
+    z-index: 1;
+    border-radius: 25px;
 }
 
 .right-details-block-videos-container {
-    display: flex;
+    overflow: auto;
+    white-space: nowrap;
+    width: 60vw;
+    height: 45vh;
+    overflow: scroll;
+    overflow-y: hidden;
+    border-radius: 15px;
     background-color: #05386B;
+    transition: all 1.5s;
+}
+.right-details-block-videos-container:hover {
+    background-color: #78EFBA;
 }
 
 .right-details-block-article-container {
+    border-radius: 20px;
     margin-top: 2vh;
     overflow: scroll;
     overflow-x: hidden;
     height:42vh;
-    /* display: flex; */
-    /* justify-content: space-evenly; */
-    flex-direction: column;
     width:61vw;
     background-color: #05386B;
+    transition: all 1.5s;
+}
+.right-details-block-article-container:hover {
+    background-color: #78EFBA;
 }
 
 .right-details-block-profilepage-articles-block {
@@ -52,8 +66,13 @@
     margin: 0.8vw;
     font-family: 'Montserrat';
     font-weight: 600;
-    max-width: 10vw;
+    max-width: 11.3vw;
     display: inline-block;
     color: black;
     background-color: white;
 }
+
+/* scroll bar css */
+::-webkit-scrollbar {
+    display:none;
+  }
